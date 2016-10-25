@@ -30,17 +30,20 @@ class BST {
             var parent = null;
             while (true) {
                 parent = current;
+                if(data==current.data){
+                    return false;
+                }
                 if (data < current.data) {
                     current = current.left;
                     if (current == null) {
                         parent.left = n;
-                        break;
+                        return true;
                     }
                 } else {
                     current = current.right;
                     if (current == null) {
                         parent.right = n;
-                        break;
+                        return true;
                     }
                 }
             }
@@ -80,7 +83,49 @@ class BST {
     }
 
     remove(data){
-        //root=removeNode(this.root,data);
+        this.root=this.removeNode(this.root,data);
+    }
+
+    //辅助方法
+    removeNode(node,data){
+     
+        if(node==null){
+            return null;
+        }
+        if(data==node.data){
+            //没有子节点的节点
+            if(node.left==null&&node.right==null){
+                return null;
+            }
+            //没有左子节点的节点
+            if(node.left==null){
+                return node.right;
+            }
+            //没有右子节点的节点
+            if(node.right==null){
+                return node.left;
+            }
+
+            var tempNode=this.getSmallestNode(node.right);
+            node.data=tempNode.data;
+            node.right=this.removeNode(node.right,tempNode.data);
+            return node;
+        }else if(data<node.data){
+            node.left=this.removeNode(node.left,data);
+            return node;
+        }else{
+            node.right=this.removeNode(node.right,data);
+            return node;
+        }
+
+    }
+
+    getSmallestNode(node){
+        var current=node;
+        while (!(current.left == null)) {
+            current = current.left;
+        }
+        return current.show();
     }
 
 }
@@ -117,10 +162,15 @@ for (let i = 0; i < 10; i++) {
     b.insert(Math.floor(Math.random() * 10));
 }
 console.log()
-
+console.log("先序遍历");
 inOrder(b.root);
-preOrder(b.root);
-postOrder(b.root);
-console.log("最大值:" + b.getMin());
-console.log("最小值:" + b.getMax());
-console.log(b.find(2));
+// console.log("中序遍历");
+// preOrder(b.root);
+// console.log("后序遍历");
+// postOrder(b.root);
+// console.log("最大值:" + b.getMin());
+ console.log("最小值:" + b.getMax());
+
+//删除节点
+b.remove(2);
+inOrder(b.root);

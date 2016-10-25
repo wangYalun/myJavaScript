@@ -146,6 +146,40 @@ setInterval(function(){
 },1000);
 
 
+// 研究下 类方法里的 递归
+
+class Test{
+	constructor(){
+		this.num=0;
+	}
+
+	fun(){
+		console.log('TEST',this.num++);
+		if(this.num==10){
+			return ;
+		}else{
+			this.fun();
+		}
+	}
+}
+
+var test=new Test();
+
+test.fun();
+console.log();
+//实验结果
+//this 依然是指当前的对象TEST 0
+// TEST 1
+// TEST 2
+// TEST 3
+// TEST 4
+// TEST 5
+// TEST 6
+// TEST 7
+// TEST 8
+// TEST 9
+
+
 
 
 
