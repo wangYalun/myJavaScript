@@ -1,10 +1,9 @@
 <?php
-$start=time();
 
-for($i=0,$sum=0;$i<100000000;$i++){
-	$sum+=1;
-}
+$a=array();
 
-$end=time();
+$b=&$a;
 
-echo $end-$start;
+$b['allen']='allen';
+
+var_dump($a);
