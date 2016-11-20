@@ -82,7 +82,7 @@ class Sort {
     //堆排序-完全二叉树/大根堆/小根堆
     heapSort() {
         var len = this.dataStore.length;
-        var it=this;
+        var it = this;
         buidMaxHeap();
         for (var i = len - 1; i > 0; i--) {
             swap(0, i);
@@ -122,6 +122,50 @@ class Sort {
     //归并排序
     mergeSort() {
 
+        var A=this.dataStore;
+        sort(0,A.length-1);
+        //排序
+        function sort(p,r) {
+            if (p < r) {
+                var q = Math.floor((p + r) / 2);
+                sort(p, q);
+                sort(q + 1, r);
+                merge(p, q, r);
+            } else {
+
+            }
+        }
+        //合并
+        function merge(p, q, r) {
+
+            // console.log("第"+he+"次合并");
+            // console.log(p+" "+q+" "+r);
+            // console.log("合并前:");
+            // console.log(A);
+            var L = [], R = [];
+            for (var i = p; i <= q; i++) {
+                L.push(A[i]);
+            }
+            for (var j = q + 1; j <= r; j++) {
+                R.push(A[j]);
+            }
+            L.push(Number.MAX_VALUE);
+            R.push(Number.MAX_VALUE);
+            i = 0;
+            j = 0;
+            for (var k = p; k <= r; k++) {
+                if (L[i] < R[j]) {
+                    A[k] = L[i];
+                    i++;
+                } else {
+                    A[k] = R[j];
+                    j++;
+                }
+            }
+            // console.log("合并后:");
+            // console.log(A);
+            // he++;
+        }
 
     }
 
@@ -200,41 +244,15 @@ var s = new Sort(20, 100);
 // console.log(s.toString());
 // s.shellSort();
 console.log(s.toString());
+console.log('堆排序');
 s.heapSort();
 console.log(s.toString());
 s.unOrder();
 console.log('快速排序');
-console.log(s.toString());
 s.quickSort();
 console.log(s.toString());
-
-function quickSort(array) {
-    function sort(prev, numsize) {
-        var nonius = prev;
-        var j = numsize - 1;
-        var flag = array[prev];
-        if ((numsize - prev) > 1) {
-            while (nonius < j) {
-                for (; nonius < j; j--) {
-                    if (array[j] < flag) {
-                        array[nonius++] = array[j];　//a[i] = a[j]; i += 1;
-                        break;
-                    };
-                }
-                for ( ; nonius < j; nonius++) {
-                    if (array[nonius] > flag) {
-                        array[j--] = array[nonius];
-                        break;
-                    }
-                }
-            }
-            array[nonius] = flag;
-            sort(0, nonius);
-            sort(nonius + 1, numsize);
-        }
-    }
-    sort(0, array.length);
-    return array;
-}
+console.log('归并排序');
+s.mergeSort();
+console.log(s.toString());
 
 
