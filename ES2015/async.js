@@ -21,16 +21,14 @@ f2("allen",f1);
  */
 
 (new Promise(function(resolve,reject){
-    setTimeout(function(){
-        resolve(100);
-    },4000);
+    setTimeout(resolve,4000,100);
     //reject(200);
 })).then(function(res){
     console.log(res);
 },function(res){
     console.log(res);
 }).then(function(res){
-    console.log(fasdf);
+    console.log('fasdf');
 }).catch(function(error){
     console.log("fsad:",error);
 });

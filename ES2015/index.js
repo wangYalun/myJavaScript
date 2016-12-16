@@ -149,10 +149,12 @@ setInterval(function(){
 // 研究下 类方法里的 递归
 
 class Test{
-	constructor(){
-		this.num=0;
+	static getName(){
+		return "allen";
 	}
-
+	static staticFun(){
+		console.log(this.getName());
+	}
 	fun(){
 		console.log('TEST',this.num++);
 		if(this.num==10){
@@ -165,7 +167,7 @@ class Test{
 
 var test=new Test();
 
-test.fun();
+//test.fun();
 console.log();
 //实验结果
 //this 依然是指当前的对象TEST 0
@@ -179,7 +181,17 @@ console.log();
 // TEST 8
 // TEST 9
 
+Test.staticFun();
 
+console.log(typeof Test);
+
+class Base{
+	static name="allen";
+
+	static sayName(){
+		
+	}
+}
 
 
 
