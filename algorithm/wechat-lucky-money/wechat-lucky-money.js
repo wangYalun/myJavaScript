@@ -30,22 +30,5 @@ MoneyPackage.prototype.openLuckyMoney = function () {
     return money;
 }
 
-//测试代码
-
-var money = 100;
-var size = 5;
-//模拟10000次发红包
-for (var j = 0; j < 10000; j++) {
-    var moneyPackage = new MoneyPackage(money, size);
-    var moneyArr=new Array(size);
-    var allMoney = 0;
-    for (var i = 0; i < size; i++) {
-        moneyArr[i]= moneyPackage.openLuckyMoney();
-        allMoney += moneyArr[i] * 100;
-    }
-    if(allMoney / 100!==money){
-        console.log('the '+j+' times',allMoney,moneyArr);
-    }
-}
 
 

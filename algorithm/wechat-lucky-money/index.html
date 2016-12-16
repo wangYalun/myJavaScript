@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>微信红包算法</title>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="wechat-lucky-money.js"></script>
+    <style>
+        *{
+            padding:0;
+            margin:0;
+        }
+        .container{
+            width:1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div>
+            <form>
+                <label>红包个数:</label><input type="number" id="size" />
+                <label>总金额:</label><input type="number" id="money" />
+                <label>测试次数:</label><input type="number" id="times" />
+                <input type="button" value="测试" id="btn-start" />
+            </form>
+        </div>
+        <div style="width: 1000px">
+<div id="chart-container"></div>
+</div>
+</div>
+</body>
+<script>
+    function start() {
+        var size = +document.getElementById('size').value;
+        var money = +document.getElementById('money').value;
+        var times = +document.getElementById('times').value;
+        if (money / size < 0.01) {
+            alert('每个人的金额必须大于0.01元');
+        }
+        //开始测试
+        var everyMoney = new Array(size);
+        for (var i = 0; i < size; i++) {
+            everyMoney[i] = 0;
+        }
+        for (var j = 0; j < times; j++) {
+            var moneyPackage = new MoneyPackage(money, size);
+            for (var i = 0; i < size; i++) {
+                everyMoney[i] += moneyPackage.openLuckyMoney();
+            }
+        }
+        for (i = 0; i < size; i++) {
+            everyMoney[i] = everyMoney[i] / times;
+        }
+        console.log(everyMoney);
+        showChart(everyMoney);
+    }
+
+    function showChart(everyMoney) {
+        var categories = [];
+        for (var i = 0; i < everyMoney.length; i++) {
+            categories[i] = '第' + (i + 1) + "个";
+        }
+        Highcharts.chart('chart-container', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: '红包测试'
+            },
+            xAxis: {
+                categories: categories,
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: '红包金额 (元)'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.2f} 元</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            series: [{
+                name:'红包金额',
+                data: everyMoney,
+                dataLabels: {
+                    enabled: true,
+                    rotation: 0,
+                    color: '#FFFFFF',
+                    align: 'right',
+                    format: '{point.y:.2f}', // one decimal
+                    y: 10, // 10 pixels down from the top
+                    style: {
+                        fontSize: '13px',
+                        fontFamily: 'Verdana, sans-serif'
+                    }
+                }
+
+            }]
+        });
+
+    }
+
+    document.getElementById('btn-start').addEventListener('click', start, false);
+
+</script>
+
+</html>
