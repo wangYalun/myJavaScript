@@ -3,12 +3,28 @@
 <head>
 	<meta charset="utf-8">
 	<title>浏览器环境测试</title>
+	<script type="text/javascript" src="ES5/ajax.js"></script>
 </head>
 <body>
 <!--测试iframe-->
-<iframe name="email-content" src="index2.html" style="width:100%;height:100%;position:absolute;"></iframe>
 <script type="text/javascript">
-	
+	// request.get('http://data.local.gaopeng.com/api/api_test/user_permission',function(res){
+	// 	console.log(res);
+	// });
+	// request.post('http://data.local.gaopeng.com/api/api_test/user_permission',{name:'allen',age:20},function(res){
+	// 	console.log(res);
+	// });
+
+	request.ajax({
+		url:'http://data.local.gaopeng.com/api/api_test/user_permission',
+		method:'get',
+		data:{name:'allen',age:20},
+		header:{myname:'bob'} //跨域不能设置自定义 header
+	}).then(function(res){
+		console.log(res);	
+	},function(err){
+		console.log(err);
+	});
 </script>
 </body>
 </html>

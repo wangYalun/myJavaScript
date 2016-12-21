@@ -201,4 +201,25 @@
     var b=[1,2,3,4,5];
 
     console.log(String.toString());
+});
+
+
+(function(){
+
+    var a={name:'allen',age:20};
+    var json="";
+    try{
+        json=JSON.stringify(a);
+    }catch(err){
+        console.log(err);
+    }
+
+    json+="";
+
+    try{
+        console.log(JSON.parse(json));
+    }catch(err){
+        console.log(err);
+    }
+    
 })();
