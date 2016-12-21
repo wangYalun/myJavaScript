@@ -222,4 +222,21 @@
         console.log(err);
     }
     
+});
+
+(function(){
+    //throw new TypeError('you must ***');
+    setTimeout(function(){
+        console.log('setTimeout');
+    });
+    console.log('fasdfas');
+})();
+(function(){
+    
+    var i=0;
+    while(i<100000000){
+        //console.log(i);
+        ++i;
+    }
+    console.log('计算完成');
 })();
