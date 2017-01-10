@@ -666,7 +666,7 @@
      * 将对象的指定名字（或所有）的属性设置为不可写的和不可配置的
      */
     function freezeProps(o) {
-        var props = (arguments.length === 1) ? Object.getOwnPropertyNames(o) : [].splice.call(argument, 1);
+        var props = (arguments.length === 1) ? Object.getOwnPropertyNames(o) : [].splice.call(arguments, 1);
         props.forEach(function (n) {
             //忽略不可变的属性
             if (!Object.getOwnPropertyDescriptor(o, n).configurable) return;
@@ -675,5 +675,130 @@
         return o;
     }
 
+    //测试代码
 
+    var o = { name: "allen", age: 20 };
+    freezeProps(o, "name");
+    o.name = "bob";
+    Object.defineProperty(o, "age", { value: 22 });
+    console.log(o.name);
+    console.log(o.age);
+
+    //将o的指定名字（或所有）的属性设置为不可枚举和可配置的
+
+    function hideProps(o) {
+        var props = (arguments.length === 1) ? Object.getOwnPropertyNames(o) : [].splice.call(arguments, 1);
+        props.forEach(function (n) {
+            if (!Object.getOwnPropertyDescriptor(o, n).configurable) {
+                return;
+            }
+            Object.defineProperty(o, n, { enumerable: false });
+        });
+    }
+
+    //定义不可枚举的属性
+    (function () {
+        //定义一个不可枚举的属性objectId,它可以被所有对象继承
+        //当读取这个属性时，调用getter 函数
+        //它没有定义setter,因此它是只读的
+        //它是不可配置的，因此它是不能删除的
+        Object.defineProperty(Object.prototype, "objectId", {
+            get: idGetter,
+            enumerable: false,
+            configurable: false
+        });
+
+        function idGetter() {
+            if (!(idprop in this)) {
+                if (!Object.isExtensible(this)) {
+                    throw Error("can\'t define id for nonextensible objects");
+                }
+                Object.defineProperty(this, idprop, {
+                    value: nextid++,
+                    writable: false,
+                    enumerable: false,
+                    configurable: false
+                });
+            }
+            return this[idprop];
+        }
+        var idprop = "|**objectId**|";
+        var nextid = 1;//给它设置初始值
+    })();
+
+    //测试代码
+    //定义过的代码，不能再定义了
+    //阻止对Object.prototype 进行扩展
+    //Object.seal(Object.prototype);
+
+    var o = { name: "allen" };
+    Object.seal(o);
+    console.log(Object.isSealed(o));
+    o.age = 20;
+    console.log(o.age);
+
+    Object.freeze(o);
+    var a = Object.create(o);
+    a.name = "allenfasd";
+
+    console.log(a.name);
+
+    /**
+     * 模块
+     */
+
+    //导出模块
+
+    var Set = (function () {
+        //私有方法
+        function _v2s() {
+            /** */
+        }
+
+        function Set() {
+
+        }
+
+        Set.prototype.add = function () {
+            console.log("this is add");
+        }
+
+        /** */
+
+        return Set;
+    })();
+
+
+
+    //模块
+    //
+    (function () {
+        var model = {};
+        model.collections = {};
+        Object.defineProperty(model, "exports", {
+            set: function (v) {
+                this.collections[v["name"]] = v["value"];
+            },
+            configurable: false,
+            enumerable: false,
+        });
+
+        function require2(name) {
+            return model.collections[name];
+        }
+        var window=window||global;
+        window.model=model;
+        window.require2=require2;
+    })();
+
+    model.exports = { name: "set", value: Set };
+
+
+    var Set = require2("set");
+    var set = new Set();
+    set.add();
 })();
+
+/**
+ * 第十一章 正则表达式的模式匹配
+ */

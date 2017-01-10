@@ -10,3 +10,5 @@ for(var i=0,sum=0;i<100000000;i++){
 var end=new Date();
 console.log(+end);
 console.log(end-start);
+
+
