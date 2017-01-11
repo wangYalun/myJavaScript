@@ -348,7 +348,7 @@
     var endTime = +new Date();
     console.log(endTime - startTime);
 
-})();
+});
 
 
 
@@ -797,8 +797,50 @@
     var Set = require2("set");
     var set = new Set();
     set.add();
-})();
+});
 
 /**
  * 第十一章 正则表达式的模式匹配
  */
+(function(){
+    //直接量
+    var pattern=/s$/;
+    var patternObject=new RexExp("\\w+");
+    var p=[];
+
+    p.push(/ab|acd/gi);//选择
+    p.push(/java(script)?/);//组合
+    p.push(/(['"])[^'"]*\1/);//引用
+    //指定位置的匹配
+    p.push(/\b[Jj]ava([Sscript])?\b/);//单词的边界\b
+    p.push(/javascript(?=\:)/); //匹配javascript后面带有冒号的javascript
+    p.push(/^JavaScript$/);
+    console.log(Object.prototype.toString.call(pattern).slice(8,-1));
+
+    var i="JAvaScript".search(/[^abc]/);//当参数是正则对象时,search 忽略g 全局属性
+    
+    i="allen,bob".search('allen');//当参数是字符串时，会将参数转化为 new RegExp('allen')
+
+    i="allen,bob".replace(/a(?:llen)\,/,'"a$1"');
+
+    i=/^\d{11}$/.test("18600699358");
+
+    i=/^(13[0-9]|15[0-9]|17[0-9]|18[0-9]|14[0-9])[0-9]{8}$/.test("18942339954");
+    i=/^[\w]+([-+.]\w+)*@\w+([-.]\w+)*$/.test("326402399+allen.wang@qq.com");
+    //i=/[\w]+/.test("326402399");
+    //i="18600699358".search(/\d{11}/);
+    //i="1,2,3,4".match(/(?:\w)+/);
+
+    console.log(i);
+});
+
+/**
+ * 第二部分 客户端JavaScript 
+ */
+/**
+ * 第十三章 Web浏览器中的JavaScript
+ */
+
+(function(){
+
+})();
