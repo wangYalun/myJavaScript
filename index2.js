@@ -837,10 +837,3 @@
 /**
  * 第二部分 客户端JavaScript 
  */
-/**
- * 第十三章 Web浏览器中的JavaScript
- */
-
-(function(){
-
-})();
