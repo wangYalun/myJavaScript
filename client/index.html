@@ -1,14 +1,36 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="utf-8">
 	<title>浏览器环境测试</title>
+	<link href="css/index.css" rel="stylesheet">
 </head>
+
 <body>
 	<div id="location"></div>
-	<script type="text/javascript" src="js/index.js"></script>
+	<!--策略模式之表单验证-->
+	<form action="" id="registerForm" method="post">
+		请输入用户名：<input type="text" name="userName" /> 请输入密码：
+		<input type="text" name="password" /> 请输入手机号码：
+		<input type="text" name="phoneNumber" />
+		<button>提交</button>
+	</form>
+	<div id="checkbox">
+		<input type="checkbox" id="1"></input>1
+		<input type="checkbox" id="2"></input>2
+		<input type="checkbox" id="3"></input>3
+		<input type="checkbox" id="4"></input>4
+		<input type="checkbox" id="5"></input>5
+		<input type="checkbox" id="6"></input>6
+		<input type="checkbox" id="7"></input>7
+		<input type="checkbox" id="8"></input>8
+		<input type="checkbox" id="9"></input>9
+	</div>
+	<script type="text/javascript" src="js/animate.js"></script>
+	<script type="text/javascript" src="js/design_patterns.js"></script>
 
-	<iframe src="index2.html" width="800px" height="800px"></iframe>
+	<!--<iframe src="index2.html" width="800px" height="800px"></iframe>-->
 </body>
 <!--[if IE 6]>
 	This content is actually inside an HTML comment;
@@ -21,7 +43,8 @@
 <![endif]-->
 
 <!--[if !IE]><-->
-<!--><![endif]-->
+<!-->
+<![endif]-->
 
 
 </html>
