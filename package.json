@@ -28,5 +28,8 @@
       "es2015",
       "stage-0"
     ]
+  },
+  "dependencies": {
+    "jquery": "^3.1.1"
   }
 }

@@ -181,13 +181,63 @@
      * 当真正发现不方便直接访问某个对象的时候，再编写代理也不迟。
      */
 
-})();
+});
 
 /**
  * 迭代器模式
+ * 迭代器模式是指提供一种方法顺序访问一个聚合对象的各个元素，而又不需要暴露该对象的内部表示。
+ */
+(function () {
+    var a = { "name": "allen", "age": 20 };
+
+    [].forEach.call(a, function (item, index, arr) {
+        console.log(index + ":" + item);
+    });
+
+    /**
+     * 迭代器模式文件上传模块
+     */
+    var uploadObj = {
+        getActiveUploadObj: function () {
+            try {
+                return new ActiveXObject("TXFTNActiveX.FTNUpload");
+            } catch (e) {
+                return false;
+            }
+        },
+        getFlashUploadObj: function () {
+            if (false) {
+                //
+                return true;
+            }
+            return false;
+        },
+        getFormUploadObj: function () {
+            var str = '<input name="file" type="file" class="ui-file" />';
+            return $(str).appendTo($('body'));
+        }
+    };
+
+    var iteratorUploadObj = function (uploadObj) {
+        for (var objName in uploadObj) {
+            console.log(objName);
+            var upload = uploadObj[objName]();
+            if (upload !== false) {
+                return upload;
+            }
+        }
+    };
+
+    var upload = iteratorUploadObj(uploadObj);
+
+
+});
+
+/**
+ * 发布订阅模式
  */
 (function(){
-    
+
 })();
 
 var miniConsole = (function () {
