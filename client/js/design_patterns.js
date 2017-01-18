@@ -236,10 +236,114 @@
 /**
  * 发布订阅模式
  */
+(function () {
+    var React = function () {
+
+    };
+
+    React.createClass = function () {
+        var reactDom = new React();
+        var obj = arguments[0];
+        if (!typeof obj === 'object') {
+            throw new Error('arg1 not an object');
+        }
+        reactDom.getInitialState = obj.getInitialState;
+        reactDom.render = obj.render;
+
+    };
+
+    /**
+     * 全局订阅-发布模式
+     */
+
+    var Event = (function () {
+        var clientList = {},
+            listen,
+            trigger,
+            remove;
+        listen = function (key, fn) {
+            if (!clientList[key]) {
+                clientList[key] = [];
+            }
+            clientList[key].push(fn);
+        };
+        trigger = function () {
+            var key = Array.prototype.shift.call(arguments),
+                fns = clientList[key];
+            if (!fns || fns.length === 0) {
+                return false;
+            }
+            for (var i = 0, fn; fn = fns[i++];) {
+                fn.apply(this, arguments);
+            }
+        };
+        remove = function (key, fn) {
+            var fns = clientList[key];
+            if (!fns) {
+                return false;
+            } if (!fn) {
+                fns && (fns.length = 0);
+            } else {
+                for (var l = fns.length - 1; l >= 0; l--) {
+                    var _fn = fns[l];
+                    if (_fn === fn) {
+                        fns.splice(l, 1);
+                    }
+                }
+            }
+        };
+        return {
+            listen: listen,
+            trigger: trigger,
+            remove: remove
+        }
+    })();
+
+    
+    /**
+     * 模块间通信
+     */
+    //模块A
+    (function () {
+        var count = 0;
+        var button = document.getElementById('count');
+        button.onclick = function () {
+            Event.trigger('add', count++);
+        };
+    })();
+    //模块B
+    (function () {
+        var div = document.getElementById("show");
+        Event.listen('add', function (count) {
+            div.innerHTML = count;
+        });
+    })();
+
+
+
+
+});
+
+/**
+ * 命令模式
+ */
 (function(){
+    var button1=document.getElementById('button1');
+    var button2=document.getElementById('button2');
+    var button3=document.getElementById('button3');
 
+    var setCommand=function(button,command){
+        button.addEventListener('click',function(){
+            command.execute();
+        },false);
+    };
+
+    var MenuBar={
+        refresh:function(){
+            console.log('刷新菜单目录');
+        }
+    }
 })();
-
 var miniConsole = (function () {
     var cache = [];
     var handler = function (ev) {

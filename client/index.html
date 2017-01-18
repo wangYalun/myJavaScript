@@ -28,10 +28,51 @@
 		<input type="checkbox" id="8"></input>8
 		<input type="checkbox" id="9"></input>9
 	</div>
-	<script type="text/javascript" src="js/animate.js"></script>
-	<script type="text/javascript" src="js/design_patterns.js"></script>
+	<div class="option">
+		<div class="date-select js-select" id="date-select">
+			<div class="select-head">
+				<span class="start">2015-03-05</span>
+				<span>-</span>
+				<span class="end">2015-03-15</span>
+				<b class="icon pulldown"></b>
+			</div>
+		</div>
+		<ul class="select-list date-select-list" id="date-select-list" style="display:none">
+<li>60</li>
+<li>30</li>
+<li>7</li>
+<li>自定义事件</li>
+<li class="date-def-li">
+	<div class="date-def">
+		<div>
+			<input class="startTime" name="startTime" type="text" /> -
+			<input class="endTime" name="endTime" type="text" />
+		</div>
+		<div>
+			<input type="button" class="btn-cancel" value="确定" />
+			<input type="button" class="btn-confirm" value="返回" />
+		</div>
+	</div>
+</li>
+</ul>
+</div>
 
-	<!--<iframe src="index2.html" width="800px" height="800px"></iframe>-->
+<div>
+	<button id="count">点我</button>
+	<div id="show"></div>
+</div>
+
+<div>
+	<button id="button1">button1</button>
+	<button id="button2">button2</button>
+	<button id="button3">button3</button>
+</div>
+
+<script type="text/javascript" src="js/animate.js"></script>
+<script type="text/javascript" src="js/design_patterns.js"></script>
+<script type="text/javascript" src="js/date-selecter.js"></script>
+
+<!--<iframe src="index2.html" width="800px" height="800px"></iframe>-->
 </body>
 <!--[if IE 6]>
 	This content is actually inside an HTML comment;
