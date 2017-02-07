@@ -40,7 +40,7 @@
     console.log(Set._v2s(o));
     console.log(Set._v2s(b));
     console.log(o);
-})();
+});
 //2017-01-10
 (function () {
 
@@ -77,4 +77,11 @@
     
 
 
+});
+
+(function(){
+    var s=setTimeout(function(){
+        console.log('llll');
+    },5000);
+    clearTimeout(s);
 })();
