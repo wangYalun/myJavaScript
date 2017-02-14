@@ -67,11 +67,57 @@
 	<button id="button2">button2</button>
 	<button id="button3">button3</button>
 </div>
+<div>
+	<form>
+		<select>
+			<option>Option1</option>
+			<option>Option2</option>
+			<option>Option3</option>
+		</select>
+		<select>
+			<option>Option1</option>
+			<option>Option2</option>
+			<option>Option3</option>
+		</select>
+	</form>
 
+	<div>
+		<div id="show-div">点击显示</div>
+		<ul id="show-ul" style="display: none">
+			<li>test1</li>
+			<li>test2</li>
+			<li>test3</li>
+			<li>test4</li>
+		</ul>
+	</div>
+</div>
 <script type="text/javascript" src="js/animate.js"></script>
 <script type="text/javascript" src="js/design_patterns.js"></script>
 <script type="text/javascript" src="js/date-selecter.js"></script>
-
+<script>
+	(function(){
+		var button=document.getElementById('show-div'),
+			showDom=document.getElementById('show-ul');
+		
+		button.onclick=function(e){
+			//e.stopImmediatePropagation();
+			//e.stopPropagation();
+			e.stopImmediatePropagation();
+			//showDom.style.display= showDom.style.display=="none"?"block":"none";
+			if(showDom.style.display==='none'){
+				showDom.style.display='block';
+				document.body.addEventListener('click',bodyClickEventHandler);
+			}else{
+				showDom.style.display='none';
+			}
+			function bodyClickEventHandler(){
+				document.body.removeEventListener('click',bodyClickEventHandler);
+				showDom.style.display='none';
+			}
+	
+		};
+	})();
+</script>
 <!--<iframe src="index2.html" width="800px" height="800px"></iframe>-->
 </body>
 <!--[if IE 6]>

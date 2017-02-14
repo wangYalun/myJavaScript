@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>CSS 测试</title>
+    <link rel="stylesheet" href="css/animation.css">
+</head>
+
+<body>
+    <!--CSS3 动画 CSS animations -->
+    <div id="animation">
+        <p class="">The Caterpillar and Alice looked at each other for some time in silence: at last the Caterpillar took the hookah
+            out of its mouth, and addressed her in a languid, sleepy voice.</p>
+        <div class="rotate">
+            therotate
+        </div>
+    </div>
+    <div>
+        <ul id="output"></ul>
+    </div>
+
+    <!--CSS3 计数器嵌套-->
+    <div id="section">
+        <h3>12345</h3>
+        <h3>12345</h3>
+        <h3>12345</h3>
+        <h3>12345</h3>
+        <ol>
+            <li>
+                <ol>
+                    <li>1231</li>
+                    <li>1231</li>
+                    <li>1231</li>
+                    <li>1231</li>
+                    <li>1231</li>
+                </ol>
+            </li>
+            <li>1231</li>
+            <li>1231</li>
+            <li>1231</li>
+            <li>1231</li>
+        </ol>
+    </div>
+
+
+    <!--CSS3 渐变-->
+    <div id="gradient">
+        <div class="linear-gradient"></div>
+        <div class="left-linear-gradient"></div>
+        <div class="bottom-right-linear-gradient"></div>
+        <div class="angle-linear-gradient"></div>
+        <div class="angle-linear-gradient"></div>
+        <div class="color-linear-gradient"></div>
+        <div class="image-linear-gradient"></div>
+        <div class="radial-gradient"></div>
+
+    </div>
+
+    <!--变形-->
+    <div id="transforms">
+        <div class="rotate-transform">
+            <div class="block green"></div>
+        </div>
+        <div class="skewx-transform">
+            <div class="block blue"></div>
+        </div>
+        <div class="block block-transition" style="margin-left: 100px;margin-top: 100px">
+            <div class="cube pers500">
+                  <div class="face front">1</div>
+                  <div class="face back">2</div>
+                  <div class="face right">3</div>
+                  <div class="face left">4</div>
+                  <div class="face top">5</div>
+                  <div class="face bottom">6</div>
+               </div>
+        </div>
+    </div>
+    <!--过渡-->
+    <div id="transitions">
+        <div class="transition block red">
+            哈哈
+        </div>
+        <div id="foo"></div>
+    </div>
+    <script>
+        window.onload = function () {
+            //setup();
+        };
+        function setup() {
+            var e = document.getElementById("animation");
+            e.addEventListener("animationstart", listener, false);
+            e.addEventListener("animationend", listener, false);
+            e.addEventListener("animationiteration", listener, false);
+        }
+
+        function listener(e) {
+            var l = document.createElement("li");
+            switch (e.type) {
+                case "animationstart":
+                    l.innerHTML = "Started: elapsed time is " + e.elapsedTime;
+                    break;
+                case "animationend":
+                    l.innerHTML = "Ended: elapsed time is " + e.elapsedTime;
+                    break;
+                case "animationiteration":
+                    l.innerHTML = "New loop started at time " + e.elapsedTime;
+                    break;
+            }
+            document.getElementById("output").appendChild(l);
+        }
+
+        var f = document.getElementById("foo");
+
+        document.addEventListener('click', function (ev) {
+            f.style.left = (ev.clientX - 25) + 'px';
+            f.style.top = (ev.clientY - 25) + 'px';
+        }, false);
+    </script>
+</body>
+
+</html>
