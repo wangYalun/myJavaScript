@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>CSS 测试</title>
+    <link rel="stylesheet" href="css/swiper.css">
+</head>
+
+<body>
+    <div class="viewport">
+        <div class="content">
+            <div class="block orange"></div>
+            <div class="block cyan"></div>
+            <div class="block red"></div>
+            <div class="block green"></div>
+        </div>
+    </div>
+    <script>
+        function Swiper(viewport) {
+            var content = viewport.querySelector(".content");
+            //var defaultStyle=window.getComputedStyle(viewport,null);
+            var pages = viewport.querySelectorAll(".block");
+            var pageNum = pages.length || 0;
+            var currentPage = 0;//默认当前页为第一页
+            var swiperWidth = ~~(viewport.clientWidth * 0.3);
+            var startX, startY, moveX, moveY, endX, endY;
+            var initX = 0;
+            var isMove = false;//是否滑动了页面
+
+            viewport.addEventListener('touchstart', function (e) {
+                console.log('start');
+                var touche = e.touches[0];
+                console.log(touche);
+                startX = touche.clientX;
+                startY = touche.clientY;
+                content.style.transition = "";
+            }, false);
+            viewport.addEventListener('touchmove', function (e) {
+                //console.log('move');
+                var touche = e.touches[0];
+                moveX = touche.clientX - startX;
+                moveY = touche.clientY = startY;
+                //如果X方向上的位移大于Y方向，则认为是左右滑动
+               
+                transition(initX + moveX);
+            }, false);
+            viewport.addEventListener('touchend', function (e) {
+                console.log('end');
+                //initX=initX+moveX;
+                if (Math.abs(moveX) > swiperWidth) {
+
+                    isMove = true;
+                }
+                swiperPage();
+            }, false);
+
+            function transition(x) {
+                content.style.transform = "translate(" + x + "px)";
+            }
+            function swiperPage() {
+                console.log(isMove);
+                content.style.transition = "all 0.3s";
+                if (isMove) {
+                    //当向左滑时，并且当前页面大于0
+                    if (moveX > 0) {
+                        if (currentPage > 0) {
+                            currentPage--;
+                            transition(initX = initX + viewport.clientWidth);
+                        } else {
+                            transition(initX);
+                        }
+
+                    } else if (moveX < 0) {
+                        if (currentPage < pageNum - 1) {
+                            currentPage++;
+                            transition(initX = initX - viewport.clientWidth);
+
+                        } else {
+                            transition(initX);
+                        }
+
+                    } else {
+                        transition(initX);
+                    }
+                }else{
+                    transition(initX);
+                }
+                isMove = false;
+            }
+        }
+        new Swiper(document.querySelector(".viewport"));
+    </script>
+</body>
+<!--<div class="block red"></div>-->
+
+</html>
