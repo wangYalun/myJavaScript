@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <title>CSS 测试</title>
     <link rel="stylesheet" href="css/animation.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
@@ -67,13 +68,13 @@
         </div>
         <div class="block block-transition" style="margin-left: 100px;margin-top: 100px">
             <div class="cube pers500">
-                  <div class="face front">1</div>
-                  <div class="face back">2</div>
-                  <div class="face right">3</div>
-                  <div class="face left">4</div>
-                  <div class="face top">5</div>
-                  <div class="face bottom">6</div>
-               </div>
+                <div class="face front">1</div>
+                <div class="face back">2</div>
+                <div class="face right">3</div>
+                <div class="face left">4</div>
+                <div class="face top">5</div>
+                <div class="face bottom">6</div>
+            </div>
         </div>
     </div>
     <!--过渡-->
@@ -82,6 +83,49 @@
             哈哈
         </div>
         <div id="foo"></div>
+    </div>
+
+    <div id="css-skill">
+        <!--使用:not()去除导航上不需要的边框-->
+        <div>
+            <ul class="nav">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+        <button class="button">I am Button</button>
+    </div>
+    <div id="background">
+        <div class="block scroll">
+            <p>
+                这是一首简单的小情歌.fasdfasfffffffffffffffff 这是一首简单的小情歌.fasdfasfffffffffffffffff 这是一首简单的小情歌.fasdfasfffffffffffffffff 这是一首简单的小情歌.fasdfasfffffffffffffffff
+                这是一首简单的小情歌.fasdfasfffffffffffffffff 这是一首简单的小情歌.fasdfasfffffffffffffffff
+            </p>
+        </div>
+        <div class="block background-color background-image background-size border-dotted padding">
+            这是一首简单的小情歌，唱着人们心中的表格
+            这是一首简单的小情歌，唱着人们心中的表格
+            这是一首简单的小情歌，唱着人们心中的表格
+            这是一首简单的小情歌，唱着人们心中的表格
+            这是一首简单的小情歌，唱着人们心中的表格
+        </div>
+    </div>
+    <div id="border">
+        <div class="block border visibility-hidden">
+            这是一首简单的小情歌，唱着人们心中的白鸽
+        </div>
+    </div>
+    <div id="table">
+        <table class="table-layout">
+            <tr><td>121</td><td>12111111</td><td>121</td><td>121</td></tr>
+            <tr><td>121</td><td>1jlkjlkjlllllllllljlkjljkllll21</td><td>121</td><td>121</td></tr>
+            <tr><td>121</td><td>121</td><td>121</td><td>121</td></tr>
+            <tr><td>121</td><td>121</td><td>121</td><td>121</td></tr>
+            <tr><td>121</td><td>121</td><td>121</td><td>121</td></tr>
+        </table>
     </div>
     <script>
         window.onload = function () {

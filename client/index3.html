@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>浏览器环境测试</title>
+	<link href="css/index.css" rel="stylesheet">
+	<script src="js/jquery.js"></script>
+</head>
+
+<body>
+	<div id="location"></div>
+	<!--策略模式之表单验证-->
+	<form action="" id="registerForm" method="post">
+		请输入用户名：<input type="text" name="userName" /> 请输入密码：
+		<input type="text" name="password" /> 请输入手机号码：
+		<input type="text" name="phoneNumber" />
+		<button>提交</button>
+	</form>
+	<div id="checkbox">
+		<input type="checkbox" id="1"></input>1
+		<input type="checkbox" id="2"></input>2
+		<input type="checkbox" id="3"></input>3
+		<input type="checkbox" id="4"></input>4
+		<input type="checkbox" id="5"></input>5
+		<input type="checkbox" id="6"></input>6
+		<input type="checkbox" id="7"></input>7
+		<input type="checkbox" id="8"></input>8
+		<input type="checkbox" id="9"></input>9
+	</div>
+	<div class="option">
+		<div class="date-select js-select" id="date-select">
+			<div class="select-head">
+				<span class="start">2015-03-05</span>
+				<span>-</span>
+				<span class="end">2015-03-15</span>
+				<b class="icon pulldown"></b>
+			</div>
+		</div>
+		<ul class="select-list date-select-list" id="date-select-list" style="display:none">
+			<li>60</li>
+			<li>30</li>
+			<li>7</li>
+			<li>自定义事件</li>
+			<li class="date-def-li">
+				<div class="date-def">
+					<div>
+						<input class="startTime" name="startTime" type="text" /> -
+						<input class="endTime" name="endTime" type="text" />
+					</div>
+					<div>
+						<input type="button" class="btn-cancel" value="确定" />
+						<input type="button" class="btn-confirm" value="返回" />
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+
+	<div>
+		<button id="count">点我</button>
+		<div id="show"></div>
+	</div>
+
+	<div>
+		<button id="button1">button1</button>
+		<button id="button2">button2</button>
+		<button id="button3">button3</button>
+	</div>
+	<div>
+		<form>
+			<select>
+			<option>Option1</option>
+			<option>Option2</option>
+			<option>Option3</option>
+		</select>
+			<select>
+			<option>Option1</option>
+			<option>Option2</option>
+			<option>Option3</option>
+		</select>
+		</form>
+
+		<div>
+			<div id="show-div">点击显示</div>
+			<ul id="show-ul" style="display: none">
+				<li>test1</li>
+				<li>test2</li>
+				<li>test3</li>
+				<li>test4</li>
+			</ul>
+		</div>
+	</div>
+	<div>
+		<div id="kern"></div>
+		<div id="nokern"></div>
+		<textarea id="input">AV T. ij</textarea>
+	</div>
+	<script type="text/javascript" src="js/animate.js"></script>
+	<script type="text/javascript" src="js/design_patterns.js"></script>
+	<script type="text/javascript" src="js/date-selecter.js"></script>
+	<script>
+		(function () {
+			var button = document.getElementById('show-div'),
+				showDom = document.getElementById('show-ul');
+
+			button.onclick = function (e) {
+				//e.stopImmediatePropagation();
+				//e.stopPropagation();
+				e.stopImmediatePropagation();
+				//showDom.style.display= showDom.style.display=="none"?"block":"none";
+				if (showDom.style.display === 'none') {
+					showDom.style.display = 'block';
+					document.body.addEventListener('click', bodyClickEventHandler);
+				} else {
+					showDom.style.display = 'none';
+				}
+				function bodyClickEventHandler() {
+					document.body.removeEventListener('click', bodyClickEventHandler);
+					showDom.style.display = 'none';
+				}
+
+			};
+		})();
+		(function () {
+			var input = document.getElementById('input'),
+				kern = document.getElementById('kern'),
+				nokern = document.getElementById('nokern');
+			function handler(e) {
+			
+				kern.textContent = input.value; /* Update content */
+				nokern.textContent = input.value;
+				console.log(e.type);
+			}
+			input.addEventListener('input',handler);
+			//input.addEventListener('change',handler);
+			kern.textContent = input.value; /* Initialize content */
+			nokern.textContent = input.value;
+		})();
+	</script>
+	<!--<iframe src="index2.html" width="800px" height="800px"></iframe>-->
+</body>
+<!--[if IE 6]>
+	This content is actually inside an HTML comment;
+	It will only be displayed in IE 6
+	
+<![endif]-->
+
+<!--[if IE]>
+	<script src=""></script>
+<![endif]-->
+
+<!--[if !IE]><-->
+<!-->
+<![endif]-->
+
+
+</html>
