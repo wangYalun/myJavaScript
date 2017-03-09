@@ -4,6 +4,7 @@ ehthumbs.db
 node_modules
 # Folder config file
 Desktop.ini
+client/resources
 
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
