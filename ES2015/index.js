@@ -195,9 +195,30 @@
  * 变量的解析赋值
  */
 (function () {
-	const {allen, bob} = { allen: "allen", bob: 'bob' };
+	const { allen, bob } = { allen: "allen", bob: 'bob' };
 	console.log(allen);
+
+	function Point(x = 0, y = 0) {
+		this.x = x;
+		this.y = y;
+	}
+
+	new Point();
+
+	function f(foo){
+		console.log(foo);
+		console.log(this.x);
+	};
+
+	function c(foo,callback){
+		callback(foo);
+	}
+	c("Hello World",f.bind(new Point()));
+	c("Hello World",f.bind(new Point(),'fasd'));
+
 })();
+
+
 
 
 

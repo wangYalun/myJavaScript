@@ -1,57 +1,98 @@
-var whenReady=(function(){
-    var funcs=[]; //当获得事件时，要运行的函数
-    var ready=false;//当触发事件处理程序时，切换到true;
-    
-    function handler(e){
-        if(ready) return ;
+var whenReady = (function () {
+    var funcs = []; //当获得事件时，要运行的函数
+    var ready = false;//当触发事件处理程序时，切换到true;
+
+    function handler(e) {
+        if (ready) return;
         //如果发生readystatechange事件,
         //但其状态不是“complete”的话，那么文档尚未准备好
-        if(e.type==="readystatechange"&&document.readyState!=="complete"){
+        if (e.type === "readystatechange" && document.readyState !== "complete") {
             return;
         }
 
         //运行所有注册函数
         //注意每次都要调用funcs.length
         //以防这些函数的调用会注册更多的函数
-        for(var i=0;i<funcs.length;i++){
+        for (var i = 0; i < funcs.length; i++) {
             funcs[i].call(document);
         }
         //现在设置ready为true,并移除所有函数
-        ready=true;
-        funcs=null;
+        ready = true;
+        funcs = null;
     }
 
-    if(document.addEventListener){
-        document.addEventListener("DOMContentLoaded",handler,false);
-        document.addEventListener("readystatechange",handler,false);
-        window.addEventListener("load",handler,false);
-    }else if(document.attachEvent){
-        document.attachEvent("onreadystatechange",hanlder);
-        window.attachEvent("onload",hanlder);
+    if (document.addEventListener) {
+        document.addEventListener("DOMContentLoaded", handler, false);
+        document.addEventListener("readystatechange", handler, false);
+        window.addEventListener("load", handler, false);
+    } else if (document.attachEvent) {
+        document.attachEvent("onreadystatechange", hanlder);
+        window.attachEvent("onload", hanlder);
     }
 
-    return function whenReady(f){
-        if(ready){ 
+    return function whenReady(f) {
+        if (ready) {
             f.call(document);
-        }else{
+        } else {
             funcs.push(f);
         }
     }
 })();
 
-function loadJavaScriptAsync(url){
-    var head=document.getElementsByTagName("head")[0];
-    var s=document.createElement("script");
-    s.src="js/asyncLoad.js";
+function loadJavaScriptAsync(url) {
+    var head = document.getElementsByTagName("head")[0];
+    var s = document.createElement("script");
+    s.src = "js/asyncLoad.js";
     head.appendChild(s);
 }
-whenReady(function(){
-    console.log("文档加载完毕");
-    //document.write("文档加载完毕");
-    setTimeout(function(){
-         loadJavaScriptAsync();
-    },5000);
+whenReady(function () {
+    (function () {
+        var navigatorObj = {};
+        for (var i in window.navigator) {
+            if (typeof window.navigator[i] === 'string') {
+                navigatorObj[i] = window.navigator[i];
+            }
+        }
+
+        client.report(client.addSerialize(client.serverURL + '/api_receiver/client_info', client.serialize(navigatorObj)));
+    })();
 });
+
+/**
+ * 获取浏览器信息,navigator 
+ */
+
+
+var client = {};
+
+client.report = (function () {
+
+    var imgs = [];
+    return function (src) {
+        var img = new Image();
+        // imgs.push(img);
+        img.src = src;
+    };
+})();
+
+client.serverURL = "http://" + document.domain + ":8081";
+
+client.serialize = function (data) {
+    if (typeof data !== 'object') {
+        return '';
+    }
+    var parts = [];
+    for (var i in data) {
+        parts.push(encodeURIComponent(i) + "=" + encodeURIComponent(data[i]));
+    }
+    return parts.join("&");
+}
+
+client.addSerialize = function (url, serialize) {
+    url += (url.indexOf("?") == -1 ? "?" : "&");
+    url += serialize;
+    return url;
+};
 
 /**
  * 客户端JavaScript 时间线
@@ -70,7 +111,7 @@ whenReady(function(){
 /**
  * 怪异模式和标准模式
  */
-(function(){
+(function () {
     console.log(document.compatMode);//CSS1Compat 标准模式 BackCompat 怪异模式
     //所有现代浏览器都实现了compatMode属性,并且HTML5规范对它进行了标准化
 
@@ -92,9 +133,9 @@ whenReady(function(){
          //IE会执行这段代码,其他浏览器不执行它
          alert("You are using Internet Explorer");
         @else*/
-        //这段代码并没有再JavaScript 注释中，但仍然在IE条件下注释中
-        //也就是说出IE外，其他浏览器都执行这里的代码
-        //alert("You are not using Internet Explorer");
+    //这段代码并没有再JavaScript 注释中，但仍然在IE条件下注释中
+    //也就是说出IE外，其他浏览器都执行这里的代码
+    //alert("You are not using Internet Explorer");
     /*@end@*/
 
     /**
@@ -103,7 +144,7 @@ whenReady(function(){
      */
 
     //Location  http://localhost?name=allen#ddd 
-    window.location===document.location; //true
+    window.location === document.location; //true
     location.search //?name=allen
     location.hash //#ddd
 
@@ -117,5 +158,5 @@ whenReady(function(){
     history.length //表示浏览器历史列表中的元素数量   
 
 
-     
+
 })();

@@ -213,7 +213,7 @@
          callback
          */
         function addURLParam(url, name, value) {
-            url += (url.index("?") == -1 ? "?" : "&");
+            url += (url.indexOf("?") == -1 ? "?" : "&");
             url += encodeURIComponent(name) + "=" + encodeURIComponent(value);
             return url;
         }
