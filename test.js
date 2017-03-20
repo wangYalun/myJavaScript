@@ -85,3 +85,31 @@
     },5000);
     clearTimeout(s);
 })();
+
+/**
+ * Array
+ */
+(function(){
+    var a=[];
+
+    a.push('allen','bob');
+    console.log(a);
+    a.push('cici');
+    // console.log(a);
+    // console.log(a.pop());
+
+    // a.unshift('di');
+    // console.log(a);
+    // console.log(a.shift());
+    // console.log(a);
+    console.log(a.reverse());
+    console.log(a);
+    console.log(a.splice(0,1));//返回删除的数组
+    console.log(a.splice(0,0,'allen','bobo'));
+    console.log(a);
+    console.log(a.slice(0,1));
+
+    a.every(function(item,index,array){
+        
+    });
+})();

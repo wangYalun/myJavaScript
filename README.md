@@ -18,33 +18,34 @@
 
 ###### algorithm
 
-- [sort](https://github.com/wangYalun/myJavaScript/tree/master/algorithm/UUID.js) 用JS实现各种排序算法（冒泡排序，直接插入排序，选择排序，希尔排序，堆排序，归并排序，快速排序）
-- [wechat-lucky-money](https://github.com/wangYalun/myJavaScript/tree/master/algorithm/wechat-lucky-money.js) 测试微信随机红包算法，讲测试结果绘制图形
+- [sort](https://github.com/wangYalun/myJavaScript/tree/master/algorithm/sort) 用JS实现各种排序算法（冒泡排序，直接插入排序，选择排序，希尔排序，堆排序，归并排序，快速排序）
+- [wechat-lucky-money](https://github.com/wangYalun/myJavaScript/tree/master/algorithm/wechat-lucky-money) 测试微信随机红包算法，讲测试结果绘制图形
 
 ###### client
 - 在浏览器端测试一些JS功能，写法，设计模式，以及CSS3
-- [js/animate.js]() 设计模式-策略模式和代理模式
-- [js/design_patterns.js]() 设计模式（策略模式之表单验证，代理模式之图片预加载，观察者模式，命令模式，享元模式之对象池，状态模式之开关按钮，状态模式之文件上传）
-- [js/date-selecter.js]() 用观察者模式重构时间选择控件
-- [js/index.js]() 《JavaScript权威指南》客户端的阅读笔记，代码测试（文档加载事件，怪异模式和标准模式注释方法）
-- [css/animation.css]() CSS3 的一些实践（渐变gradient，变型transforms，过渡transitions，动画animation）
-- [css/style.css]() css 中的一些疑点实践
+- [js/animate.js](https://github.com/wangYalun/myJavaScript/blob/master/client/js/animate.js) 设计模式-策略模式和代理模式
+- [js/design_patterns.js](https://github.com/wangYalun/myJavaScript/blob/master/client/js/design_patterns.js) 设计模式（策略模式之表单验证，代理模式之图片预加载，观察者模式，命令模式，享元模式之对象池，状态模式之开关按钮，状态模式之文件上传）
+- [js/date-selecter.js](https://github.com/wangYalun/myJavaScript/blob/master/client/js/date-selecter.js) 用观察者模式重构时间选择控件
+- [js/index.js](https://github.com/wangYalun/myJavaScript/blob/master/client/js/index.js) 《JavaScript权威指南》客户端的阅读笔记，代码测试（文档加载事件，怪异模式和标准模式注释方法）
+- [css/animation.css](https://github.com/wangYalun/myJavaScript/blob/master/client/css/animation.css) CSS3 的一些实践（渐变gradient，变型transforms，过渡transitions，动画animation）
+- [css/style.css](https://github.com/wangYalun/myJavaScript/blob/master/client/css/style.css) css 中的一些疑点实践
 
 ###### data_structures
 > 数据结构的JavaScript 描述
 
-- [List.js]() 列表
-- [Stack.js]() 堆栈
-- [Set.js]() 集合
-- [Queue.js]() 队列
-- [LinkedList.js]() 链表
-- [Graph.js]() 图
-- [Dictionary.js]() 字典
-- [BST.js]() 二叉搜索树
+- [List.js](https://github.com/wangYalun/myJavaScript/blob/master/data_structures/List.js) 列表
+- [Stack.js](https://github.com/wangYalun/myJavaScript/blob/master/data_structures/Stack.js) 堆栈
+- [Set.js](https://github.com/wangYalun/myJavaScript/blob/master/data_structures/Set.js) 集合
+- [Queue.js](https://github.com/wangYalun/myJavaScript/blob/master/data_structures/Queue.js) 队列
+- [LinkedList.js](https://github.com/wangYalun/myJavaScript/blob/master/data_structures/LinkedList.js) 链表
+- [Graph.js](https://github.com/wangYalun/myJavaScript/blob/master/data_structures/Graph.js) 图
+- [Dictionary.js](https://github.com/wangYalun/myJavaScript/blob/master/data_structures/Dictionary.js) 字典
+- [BST.js](https://github.com/wangYalun/myJavaScript/blob/master/data_structures/BST.js) 二叉搜索树
 
 ###### design_patterns
 > JavaScript 设计模式
 
+[index.js](https://github.com/wangYalun/myJavaScript/blob/master/design_patterns/index.js)
 - 函数节流
 - 分时节流
 - 惰性加载
@@ -64,11 +65,12 @@
 ###### test
 
 ###### tools 
-- [Router.js]() 路由实现原理
+- [Router.js](https://github.com/wangYalun/myJavaScript/blob/master/tools/Router.js) 路由实现原理
+- [index.js](https://github.com/wangYalun/myJavaScript/blob/master/tools/index.js) 常有函数收集
 
 ###### client_check.js 
-> 客户端浏览器检查代码
+> [client_check.js](https://github.com/wangYalun/myJavaScript/blob/master/client_check.js)客户端浏览器检查代码
 
-###### [index.js](), [index2.js](), [test.js]()
+###### [index.js](https://github.com/wangYalun/myJavaScript/blob/master/index.js), [index2.js]https://github.com/wangYalun/myJavaScript/blob/master/index2.js(), [test.js](https://github.com/wangYalun/myJavaScript/blob/master/test.js)
 > 《JavaScript权威指南》第六版 ，《JavaScript高级程序设计》阅读笔记
 
