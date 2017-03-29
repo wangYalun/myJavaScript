@@ -14,6 +14,7 @@
         //defer 属性，立即下载，待整个页面解析完成再运行
         //
     </script>
+    <script src="js/bom.js"></script>
 </head>
 
 <body>
@@ -25,10 +26,72 @@
         <li><a href="index-mobile.html">index-mobile.html(移动浏览器环境测试)</a></li>
         <li><a href="style.html">style.html(CSS 测试)</a></li>
     </ul>
+    <div id="question-6">
+        <div><span>fsd</span>12岁</div>
+        <div><span>fas</span>12岁</div>
+        <div><span>fasd</span>12岁</div>
+        <div><span>gas</span>12岁</div>
+    </div>
+    <div id="content-xy"></div>
     <noscript>
-        1. 浏览器不支持脚本
-        2. 浏览器支持脚本，但脚本被禁用
+        1. 浏览器不支持脚本 2. 浏览器支持脚本，但脚本被禁用
     </noscript>
+    <script>
+        var dom = document.getElementById("question-6");
+        var userDom = dom.querySelectorAll("div");
+        console.log(Array.isArray(userDom));
+        userDom = Array.prototype.slice.call(userDom);
+        var ages = userDom.map(function (item, index, array) {
+            return parseInt(item.lastChild.nodeValue);
+        });
+        var allAge = ages.reduce(function (prev, cur, index, array) {
+            return prev + cur;
+        });
+        console.log(allAge / ages.length);
+        console.log(Array.isArray(userDom));
+
+        var obj = {
+            "0-1":0,
+            "0-0":0,
+            "0-3":0,
+            "1-0":0,
+            "1-1":0,
+            "0-2":0
+        };
+
+        // for (var i = 0; i < 10; ++i) {
+        //     for (var k = 0; k < 20; ++k) {
+        //         obj[i + "-" + k] = 0;
+        //     }
+        // };
+        console.log(obj);
+
+        function fn(contentDom,obj) {
+
+            var divWrap = [];
+            for (var i in obj) {
+                var xy = i.split("-");
+                var x = xy[0], y = xy[1];
+                if (!divWrap[x]) {
+                    divWrap[x] = [];
+                }
+                var div = document.createElement("div");
+                div.style.display = "inline-block";
+                div.style.border="1px solid #333";
+                var divText = document.createTextNode(i);
+                div.appendChild(divText);
+                divWrap[x][y] = div;
+            }
+            for (var k in divWrap) {
+                var divWrapDom = document.createElement("div");
+                for(var j in divWrap[k]){
+                    divWrapDom.appendChild(divWrap[k][j]);
+                }
+                contentDom.appendChild(divWrapDom);
+            }
+        }
+        fn(document.getElementById('content-xy'),obj);
+    </script>
 </body>
 
 </html>

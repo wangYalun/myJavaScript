@@ -786,9 +786,9 @@
         function require2(name) {
             return model.collections[name];
         }
-        var window=window||global;
-        window.model=model;
-        window.require2=require2;
+        var window = window || global;
+        window.model = model;
+        window.require2 = require2;
     })();
 
     model.exports = { name: "set", value: Set };
@@ -802,37 +802,96 @@
 /**
  * 第十一章 正则表达式的模式匹配
  */
-(function(){
+(function () {
     //直接量
-    var pattern=/s$/;
-    var patternObject=new RexExp("\\w+");
-    var p=[];
+    var pattern = /s$/;
 
-    p.push(/ab|acd/gi);//选择
-    p.push(/java(script)?/);//组合
-    p.push(/(['"])[^'"]*\1/);//引用
-    //指定位置的匹配
+    var patternObject = new RegExp("\\w+");
+    var p = [];
+
+
+
+    p.push(/abc\o\n/);//匹配 直接字符量，字符和数据本身, \o NUL字符, \t 制表符 \n 换行符 \v 垂直制表符  \f 换页符 \r 回车符 \xnn 
+    p.push(/\d+/); //匹配包含 一个或多个数字的所以字符
+    /**
+     * [...] 方括号内的任意字符
+     * [^...] 不在方括号的任意字符
+     * . 除换行符和其他Unicode行终止符之外的任意字符
+     * \w 任何ASCII字符组成的单词，等价于[a-zA-Z0-9]
+     * \W 任何不是ASCII字符组成的单词，等价于[^a-zA-Z0-9]
+     * \s 任何Unicode空白符
+     * \S 任何非Unicode空白符的字符
+     * \d 任何ASCII数字，等价于[0-9]
+     * \D 除了ASCII数字之外的任何字符，等价于[^0-9]
+     * [\b] 退格直接量
+     */
+    /**
+     * 10.1.3 重复
+     * {n,m} 匹配前一项至少n次，但不能多于m次
+     * {n,} 匹配前一项n次，或更多次
+     * {n} 匹配前一项n次
+     * ? 匹配前一次0次或者1次
+     * + 匹配前一项1次或者多次
+     * * 匹配前一项0次或者多次
+     */
+    p.push(/\d{1,2}/);//匹配包含由一个到两个数字的字符串
+    p.push(/a+/);//贪婪匹配，尽可能的多匹配更多的a，例如 当用 aaa 进行匹配时，会匹配它的三个字符
+    p.push(/a+?/);//非贪婪匹配，尽可能的少匹配，例如 当用 aaa 进行匹配时，会匹配它的一个字符a, /a+?b/ 等价于 /a+b/
+    /**
+     * 10.1.4 选择，分组和引用
+     * | 选择，匹配的是该选择符左边的子表达式或右边的子表达式
+     * (...) 组合，将几个项组合为一个单元，这个单元可通过 "*" ,"+","?" 等符号加以修饰，并且可以引用
+     * (?:...) 只组合，不记忆，无法引用
+     * \n 和第n个分组第一次匹配的字符相匹配
+     */
+    p.push(/ab|acd/gi);//选择,选择项的尝试匹配次序是从左到右，直到发现了匹配项
+    p.push(/java(script)?/);//组合，匹配 java 或 javascript 
+    p.push(/(['"])[^'"]*\1/);//引用， 匹配单引号或双引号里的内容
+    /**
+     * 10.1.5 指定匹配的位置
+     * ^ 匹配字符串的开头, 在多行检索中，匹配一行的开头
+     * $ 匹配字符串的结尾，在多行检索中，匹配一行的结尾
+     * \b 匹配单词的边界
+     * \B 匹配非单词边界的位置
+     * (?=p) 要求接下来的字符都与p匹配，但不能包括匹配p的那些字符
+     * (?!=p) 要求接下来的字符不与p匹配
+     */
     p.push(/\b[Jj]ava([Sscript])?\b/);//单词的边界\b
     p.push(/javascript(?=\:)/); //匹配javascript后面带有冒号的javascript
+    p.push()
     p.push(/^JavaScript$/);
-    console.log(Object.prototype.toString.call(pattern).slice(8,-1));
+    console.log(Object.prototype.toString.call(pattern).slice(8, -1));
+    /**
+     * 10.2 用于模式匹配的String方法
+     * String 支持4种使用正则表达式的方法
+     */
 
-    var i="JAvaScript".search(/[^abc]/);//当参数是正则对象时,search 忽略g 全局属性
-    
-    i="allen,bob".search('allen');//当参数是字符串时，会将参数转化为 new RegExp('allen')
+    var i = "JAvaScript".search(/[^abc]/);//当参数是正则对象时,search 忽略g 全局属性，返回第一个与之匹配的子串的位置
+    console.log("question 1:",i);//0 
 
-    i="allen,bob".replace(/a(?:llen)\,/,'"a$1"');
+    i = "allen,bob".search('allen');//当参数是字符串时，会将参数转化为 new RegExp('allen')
 
-    i=/^\d{11}$/.test("18600699358");
+    var text='"This is a text~"';
+    //text.replace(/"([^"]*)"/,'“$1”');
+    console.log("question 2:",text.replace(/"([^"]*)"/,'“$1”')); // 将替换双引号
+    i = "allen,bob".replace(/a(?:llen)\,/, '"a$1"');
 
-    i=/^(13[0-9]|15[0-9]|17[0-9]|18[0-9]|14[0-9])[0-9]{8}$/.test("18942339954");
-    i=/^[\w]+([-+.]\w+)*@\w+([-.]\w+)*$/.test("326402399+allen.wang@qq.com");
+    console.log("question 3",text.match(/\b\w+\b/g));// 将所有单词匹配出来，返回一个数组
+
+
+    console.log("question 4",text.split(/\s+/));
+
+    i = /^\d{11}$/.test("18600699358");
+
+    i = /^(13[0-9]|15[0-9]|17[0-9]|18[0-9]|14[0-9])[0-9]{8}$/.test("18942339954");
+    i = /^[\w]+([-+.]\w+)*@\w+([-.]\w+)*$/.test("326402399+allen.wang@qq.com");
     //i=/[\w]+/.test("326402399");
     //i="18600699358".search(/\d{11}/);
     //i="1,2,3,4".match(/(?:\w)+/);
 
     console.log(i);
-});
+
+})();
 
 /**
  * 第二部分 客户端JavaScript 
