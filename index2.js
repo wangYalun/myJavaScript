@@ -867,22 +867,28 @@
      */
 
     var i = "JAvaScript".search(/[^abc]/);//当参数是正则对象时,search 忽略g 全局属性，返回第一个与之匹配的子串的位置
-    console.log("question 1:",i);//0 
+    console.log("question 1:", i);//0 
 
     i = "allen,bob".search('allen');//当参数是字符串时，会将参数转化为 new RegExp('allen')
 
-    var text='"This is a text~"';
+    var text = '"This is a     text~"';
     //text.replace(/"([^"]*)"/,'“$1”');
-    console.log("question 2:",text.replace(/"([^"]*)"/,'“$1”')); // 将替换双引号
+    console.log("question 2:", text.replace(/"([^"]*)"/, '“$1”')); // 将替换双引号
     i = "allen,bob".replace(/a(?:llen)\,/, '"a$1"');
 
-    console.log("question 3",text.match(/\b\w+\b/g));// 将所有单词匹配出来，返回一个数组
+    console.log("question 3", text.match(/\b\w+\b/g));// 将所有单词匹配出来，返回一个数组
 
+    console.log("fas0001000,000fas".replace(/[^1-9]*([1-9][\d]*)[^\d]*/,"$1"));
+    console.log("fasdf$12319098098~fsdf".match(/[\$￥][1-9][0-9]*[.,]*[0-9]*(?=~)/g));
 
-    console.log("question 4",text.split(/\s+/));
+    console.log(/[1-9][0-9]*[.,]*[0-9]*/.exec('fasdfa2342,2342adsf'));
 
-    i = /^\d{11}$/.test("18600699358");
-
+    console.log("question 4", text.split(/\s+/));
+    /**
+     * 10.3 RegExp 对象
+     */
+    i = /^0?\d{11}$/.test("018600699358");
+    console.log("question 5",i);
     i = /^(13[0-9]|15[0-9]|17[0-9]|18[0-9]|14[0-9])[0-9]{8}$/.test("18942339954");
     i = /^[\w]+([-+.]\w+)*@\w+([-.]\w+)*$/.test("326402399+allen.wang@qq.com");
     //i=/[\w]+/.test("326402399");
