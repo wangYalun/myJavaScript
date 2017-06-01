@@ -188,3 +188,5 @@
     console.log(person1.getName());
 
 })();
+
+console.log("fixed bug 101");
