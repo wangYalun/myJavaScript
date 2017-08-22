@@ -205,16 +205,247 @@
 
 	new Point();
 
-	function f(foo){
+	function f(foo) {
 		console.log(foo);
 		console.log(this.x);
 	};
 
-	function c(foo,callback){
+	function c(foo, callback) {
 		callback(foo);
 	}
-	c("Hello World",f.bind(new Point()));
-	c("Hello World",f.bind(new Point(),'fasd'));
+	c("Hello World", f.bind(new Point()));
+	c("Hello World", f.bind(new Point(), 'fasd'));
+
+	const o = { name: "allen", age: 20 };
+
+	o.name = 'bob';
+
+	console.error(o);
+
+	const str = `Allen,${o.name + " cici"}`;
+
+
+	console.log(`${o}`);
+	//Symbol
+	let s = Symbol();
+
+	o[s] = function () {
+		console.log("symbol");
+	}
+
+	o[s]();
+	//Set
+	const ss = new Set();
+
+	[2, 3, 4, 5, 23, 3, 3, 5].forEach(item => ss.add(item));
+
+	ss.add(1).add(2);
+
+	ss.delete(2);
+
+	ss.has(2);
+
+	ss.clear();
+
+	console.log(ss);
+
+	//数组去除重复对象
+
+	var a = { name: 'allen' }, b = a;
+
+	var array_1 = [a, b];
+	console.log(array_1);
+	var set_1 = new Set();
+	set_1.add(a).add(b);
+	console.log(set_1);
+
+	var array_unique = Array.from(new Set(array_1));
+
+	function unique(arr) {
+		var _arr = [], _obj = {};
+		for (var i = 0, len = arr.length; i < len; i++) {
+			if (!_obj[arr[i]]) {
+				_arr.push(arr[i]);
+			}
+		}
+		return _arr;
+	}
+
+	function unique2(arr) {
+		var _arr = [];
+		for (var i = 0, len = arr.length; i < len; i++) {
+			if (_arr.indexOf(arr[i]) < 0) {
+				_arr.push(arr[i]);
+			}
+		}
+		return _arr;
+	}
+
+	console.log(unique(array_1));
+	console.log(unique2(array_1));
+	console.log(array_unique);
+	//Proxy
+	//set and get 拦截
+	var proxy = new Proxy({ time: 2, _time: 2 }, {
+		get: function (target, key, receiver) {
+			//console.log(target, key, receiver);
+			return Reflect.get(target, key, receiver);
+		},
+		set: function (target, key, value, receiver) {
+			return Reflect.set(target, key, value, receiver);
+		},
+		has: function (target, key) {
+			console.log('has');
+			if (key[0] === '_') {
+				return false;
+			}
+			return key in target;
+		}
+	});
+	function foo() {
+		return 'foo';
+	}
+	//apply 拦截，当对象是个函数时执行时
+	var p = new Proxy(foo, {
+		apply: function () {
+			console.log('Proxy.apply');
+			return Reflect.apply(...arguments);
+		}
+	});
+	console.log(p());
+	proxy.time = 1;
+	proxy.time++;
+	console.log(proxy.time);
+
+
+
+	//has 拦截， 即拦截HasProperty.
+	console.assert('time' in proxy, '_time is true');
+	//has 拦截，对for...in 无效
+	for (var key in proxy) {
+		console.log(key, proxy[key]);
+	}
+
+	//Reflect
+
+	var myObject = {
+		name: "allen",
+		age: 20,
+		eat() {
+			console.log('eat');
+			return 'haha';
+		},
+		set setName(value) {
+			this.name = value;
+		}
+	}
+
+	var receiverObj = {
+		name: "allen"
+	}
+
+	console.log(Reflect.get(myObject, 'name'));
+
+	console.log(Reflect.get(myObject, 'eat')());
+	Reflect.set(myObject, 'name', 'bob');
+	Reflect.set(myObject, 'name', 'bob', receiverObj);
+	console.log(myObject.name);
+	console.log(receiverObj.name);
+
+	console.assert(Reflect.has(myObject, 'name'), 'myObject has name');
+
+	Reflect.deleteProperty(myObject, 'name');
+
+	console.log(myObject.name);
+
+	function Person(name) {
+		this.name = name;
+	}
+
+
+
+	var person = new Person("allen");
+
+	var person2 = new Person("bob");
+
+
+
+	console.assert(Reflect.getPrototypeOf(person) === Person.prototype, 'heh');
+
+	Reflect.setPrototypeOf(person, { getName: function () { return this.name } });
+
+	console.log(person.getName());
+	//console.log(person2.getName());
+
+
+
+});
+
+(function () {
+	var promise = new Promise(function (resolve, reject) {
+
+		var randomNum = ~~(Math.random() * 10 + 1);
+		if (randomNum > 5) {
+			resolve(randomNum);
+		} else {
+			reject(randomNum);
+		}
+	});
+	//then 返回一个新的promise实例
+	promise.then(function (num) {
+		console.log("随机数字大于5：" + num);
+		return ~~(Math.random() * 10 + 1);
+	}, function (num) {
+		console.log("随机数字小于等于5：" + num);
+	}).then();
+
+
+	var p1 = new Promise((resolve, reject) => {
+		setTimeout(() => {
+			resolve('呵呵')
+		}, 3000);
+	});
+	var p2 = new Promise((resolve, reject) => {
+		setTimeout(() => {
+			resolve(p1);
+		}, 1000);
+	});
+
+	p2.then((str) => { console.log('haha', str) });
+
+	//Promise.prototype.then,Promise.protype.catch
+	var p3 = new Promise((resolve, reject) => {
+		setTimeout(() => {
+			resolve('hello Promise.prototype.then');
+		}, 1000);
+		//reject(new Error('p3 is error'));
+	});
+
+	p3.then((str) => {
+		console.log(str);//hello Promise.prototype.then
+		return "hello Promise.prototype.then step2";
+	}).then((str) => { console.log(str); throw new Error('this is a error'); })
+		.catch(error => { console.log(error) });
+
+
+	//Promise.all
+
+	var promises = [1, 2, 3, 4, 5].map((item, index) => new Promise((resolve, reject) => {
+		setTimeout(() => {
+			resolve(item);
+		}, item * 1000);
+	}));
+	promises[0] = promises[0].then(res => res * 10);
+
+	//Promise.all(promises).then(datas => { console.log(datas) }).catch(e => { console.log(e) });
+
+
+	Promise.race(promises).then(datas => { console.log(datas) });
+
+
+
+
+
 
 })();
 
