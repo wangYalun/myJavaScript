@@ -51,6 +51,45 @@ var moment = require('moment');
 
 	bigObj.obj.fun();
 	bigObj.obj.fun2();
+});
+
+(function () {
+	var endTime = +moment("2017-11-06", "YYYY-MM-DD 00:00:00").add(1, "days");
+
+	// var currentTime = (moment(1509940712000).format("YYYY-MM-DD HH:mm:ss"));
+	var currentTime = 1509940712000;
+
+	console.log(endTime - currentTime);
+
+	console.log(12 * 60 * 60 * 1000);
+
+	//console.log(leftTime);
+})();
+
+
+(function () {
+	var arr = [
+		{ date: "2017-11-08", name: "allen" },
+		{ date: "2017-11-09", name: "allen" },
+		{ date: "2017-11-08", name: "bob" }
+	];
+
+	var target = arr.find(item => item.date === "2017-11-08");
+
+	target.name = "cici";
+
+	console.log(arr);
+	console.log(target);
+})();
+
+(function () {
+	var i = setInterval(() => {
+		console.log(new Date());
+	}, 10000);
+
+	setTimeout(() => {
+		clearInterval(i);
+	}, 5000);
 })();
 
 

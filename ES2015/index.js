@@ -447,6 +447,19 @@
 
 
 
+});
+
+(function () {
+	const fun = () => {
+		console.log(this);
+	}
+	const fun2 = function () {
+		console.log(this);
+	}
+	const obj = { name: "allen" };
+	fun.call(obj);
+
+	fun2.call(obj);
 })();
 
 

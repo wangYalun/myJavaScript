@@ -20,17 +20,37 @@
 <body>
     <h3>测试页面</h3>
     <ul>
-        <li><a href="index.html">首页</a></li>
-        <li><a href="index2.html">index2.html(JavaScript 浏览器环境测试)</a></li>
-        <li><a href="index3.html">index3.html(设计模式 浏览器环境测试)</a></li>
-        <li><a href="index-mobile.html">index-mobile.html(移动浏览器环境测试)</a></li>
-        <li><a href="style.html">style.html(CSS 测试)</a></li>
+        <li>
+            <a href="index.html">首页</a>
+        </li>
+        <li>
+            <a href="index2.html">index2.html(JavaScript 浏览器环境测试)</a>
+        </li>
+        <li>
+            <a href="index3.html">index3.html(设计模式 浏览器环境测试)</a>
+        </li>
+        <li>
+            <a href="index-mobile.html">index-mobile.html(移动浏览器环境测试)</a>
+        </li>
+        <li>
+            <a href="style.html">style.html(CSS 测试)</a>
+        </li>
+        <li>
+            <a href="index.jquery.html">jquery 上传文件</a>
+        </li>
+        <li>
+            <a href="element.html">html 元素</a>
+        </li>
     </ul>
     <div id="question-6">
-        <div><span>fsd</span>12岁</div>
-        <div><span>fas</span>12岁</div>
-        <div><span>fasd</span>12岁</div>
-        <div><span>gas</span>12岁</div>
+        <div>
+            <span>fsd</span>12岁</div>
+        <div>
+            <span>fas</span>12岁</div>
+        <div>
+            <span>fasd</span>12岁</div>
+        <div>
+            <span>gas</span>12岁</div>
     </div>
     <div id="content-xy"></div>
     <noscript>
@@ -51,12 +71,12 @@
         console.log(Array.isArray(userDom));
 
         var obj = {
-            "0-1":0,
-            "0-0":0,
-            "0-3":0,
-            "1-0":0,
-            "1-1":0,
-            "0-2":0
+            "0-1": 0,
+            "0-0": 0,
+            "0-3": 0,
+            "1-0": 0,
+            "1-1": 0,
+            "0-2": 0
         };
 
         // for (var i = 0; i < 10; ++i) {
@@ -66,7 +86,7 @@
         // };
         console.log(obj);
 
-        function fn(contentDom,obj) {
+        function fn(contentDom, obj) {
 
             var divWrap = [];
             for (var i in obj) {
@@ -77,20 +97,20 @@
                 }
                 var div = document.createElement("div");
                 div.style.display = "inline-block";
-                div.style.border="1px solid #333";
+                div.style.border = "1px solid #333";
                 var divText = document.createTextNode(i);
                 div.appendChild(divText);
                 divWrap[x][y] = div;
             }
             for (var k in divWrap) {
                 var divWrapDom = document.createElement("div");
-                for(var j in divWrap[k]){
+                for (var j in divWrap[k]) {
                     divWrapDom.appendChild(divWrap[k][j]);
                 }
                 contentDom.appendChild(divWrapDom);
             }
         }
-        fn(document.getElementById('content-xy'),obj);
+        fn(document.getElementById('content-xy'), obj);
     </script>
 </body>
 

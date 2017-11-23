@@ -89,5 +89,31 @@ export default {
             value = decodeURIComponent(document.cookie.substring(start + name.length, end));
         }
         return value;
+    },
+    /**
+     * 前端导出CSV
+     */
+    exportCsv: function (obj) {
+        //title ["","",""]
+        var title = obj.title;
+        //titleForKey ["","",""]
+        var titleForKey = obj.titleForKey;
+        var data = obj.data;
+        var str = [];
+        str.push(obj.title.join(",") + "\n");
+        for (var i = 0; i < data.length; i++) {
+            var temp = [];
+            for (var j = 0; j < titleForKey.length; j++) {
+                temp.push(data[i][titleForKey[j]]);
+            }
+            str.push(temp.join(",") + "\n");
+        }
+        var uri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(str.join(""));
+        var downloadLink = document.createElement("a");
+        downloadLink.href = uri;
+        downloadLink.download = "export.csv";
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
     }
 };

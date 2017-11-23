@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HTML</title>
+    <base href="http://localhost/" target="_blank">
+    <script>
+        window.onload = function () {
+            //console.log("hahah");
+            document.body.addEventListener('blur', function () {
+                console.log("失去焦点")
+            }, false);
+            document.body.addEventListener('resize', function () {
+                console.log("resize");
+            }, false);
+        }
+    </script>
+    <style>
+        table{
+            border: 1px solid #aaa;
+            border-collapse: collapse;
+            
+        }
+        table td{
+            border: 1px solid #aaa;
+        }
+    </style>
+</head>
+
+<body>
+
+    <a href="https://www.baidu.com">this is a link</a>
+    <!-- 代表缩写 -->
+    <abbr title="https://www.baidu.com">百度</abbr>
+    <map name="primary">
+        <area shape="circle" coords="200,250,25" href="another.htm" />
+        <area shape="default" nohref />
+    </map>
+    <!-- artice -->
+    <article>
+        <header>
+            <h2>Jurassic Park</h2>
+        </header>
+        <section class="main_review">
+            <p>Dinos were great!</p>
+        </section>
+        <section class="user_reviews">
+            <article class="user_review">
+                <p>Way too scary for me.</p>
+                <footer>
+                    <p>
+                        Posted on
+                        <time datetime="2015-05-16 19:00">May 16</time> by Lisa.
+                    </p>
+                </footer>
+            </article>
+            <article class="user_review">
+                <p>I agree, dinos are my favorite.</p>
+                <footer>
+                    <p>
+                        Posted on
+                        <time datetime="2015-05-17 19:00">May 17</time> by Tom.
+                    </p>
+                </footer>
+            </article>
+        </section>
+        <footer>
+            <p>
+                Posted on
+                <time datetime="2015-05-15 19:00">May 15</time> by Staff.
+            </p>
+            <aside>
+                The movie earned $87 million during its initial release.
+            </aside>
+        </footer>
+
+    </article>
+
+    <code>
+        console.log("allen");
+    </code>
+
+    <!-- <a href="/www.baidu.com" target="_self">baidu</a> -->
+    <p dir="ltr">
+        我说所有的酒都不如你
+        <bdi>ABCD</bdi>
+    </p>
+    <blockquote cite="https://www.baidu.com">
+        我以为你以哈哈哈哈哈
+    </blockquote>
+
+    <button name="name" type="button">哈哈哈</button>
+    <canvas>
+        Sorry, your browser doesn't support the &lt;canvas&gt; element
+    </canvas>
+
+    <table>
+        <!-- caption -->
+        <caption>this is a table</caption>
+        <colgroup>
+            <col span="2">
+        </colgroup>
+        <tbody>
+            <tr>
+                <td>haha</td>
+            </tr>
+            <tr>
+                <td>haha</td>
+                <td>haha</td>
+                <td>haha</td>
+            </tr>
+
+            <tr>
+                <td>haha</td>
+            </tr>
+        </tbody>
+    </table>
+    <ul>
+        <li><data value="fasdfad">迷你番茄酱</data></li>
+        <li><data value="ahahah">迷你番茄酱</data></li>
+        <li><data value="fhasdhfa">迷你番茄酱</data></li>
+    </ul>
+</body>
+
+</html>
