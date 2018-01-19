@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="http://api.map.baidu.com/api?v=2.0&ak=bCv4EquRTfTbfnnMem5iP9UpXKkeHO3P" type="text/javascript"></script>
+</head>
+
+<body>
+    <div id="map" style="height:600px">
+
+    </div>
+    <div>
+        <button id="create_btn">生成线路</button>
+    </div>
+    <script>
+        var map = new BMap.Map("map");
+        var point = new BMap.Point(114.058638, 22.549316);  // 创建点坐标
+        map.centerAndZoom(point, 13);
+        map.enableScrollWheelZoom(true);
+        map.addControl(new BMap.NavigationControl({ anchor: BMAP_ANCHOR_BOTTOM_RIGHT, type: BMAP_NAVIGATION_CONTROL_SMALL }));
+
+        //测试站点
+        var lineStationList = [
+            {
+                "stationName": "海滨广场",
+                "latitude": 22.5697078501659,
+                "longitude": 113.897989799225,
+            },
+            {
+                "stationName": "创业天虹南",
+                "latitude": 22.5663839147281,
+                "longitude": 113.901430233226,
+            },
+            {
+                "stationName": "宝安交通运输局①",
+                "latitude": 22.565906,
+                "longitude": 113.907905,
+            },
+            {
+                "stationName": "北环科苑天桥公交站",
+                "latitude": 22.55753,
+                "longitude": 113.946973,
+            },
+            {
+                "stationName": "海能达大厦",
+                "latitude": 22.557612,
+                "longitude": 113.950518,
+            },
+            {
+                "stationName": "科苑北公交站",
+                "latitude": 22.551913,
+                "longitude": 113.951908,
+            },
+            {
+                "stationName": "深南科苑立交北公交站",
+                "latitude": 22.547882,
+                "longitude": 113.951984,
+            }
+        ];
+
+
+        var points = [];
+        lineStationList.forEach((item, index) => {
+            var point = new BMap.Point(item.longitude, item.latitude)
+            var marker = new BMap.Marker(point);
+            var label = new BMap.Label(item.stationName, { offset: new BMap.Size(20, -10) });
+            marker.setLabel(label);
+            points.push(point);
+            map.addOverlay(marker);
+        });
+        map.centerAndZoom(points[Math.floor(points.length / 2)], 13);
+
+
+
+
+        // var points = [];
+        // lineStationList.forEach((item, index) => {
+        //     var point = new BMap.Point(item.longitude, item.latitude)
+        //     var marker = new BMap.Marker(point);
+        //     var label = new BMap.Label(item.stationName, { offset: new BMap.Size(20, -10) });
+        //     marker.setLabel(label);
+        //     points.push(point);
+        //     map.addOverlay(marker);
+        // });
+
+
+        //生成线路
+        function onCreateLine() {
+            var driving = new BMap.DrivingRoute(map, {
+                renderOptions: {
+                    map: map,
+                    enableDragging: true,
+                    autoViewport: true
+                }
+            });
+            //设置线路策略
+            var driverPolicy = "BMAP_DRIVING_POLICY_LEAST_TIME";
+            switch (driverPolicy) {
+                case "BMAP_DRIVING_POLICY_LEAST_TIME":
+                    driving.setPolicy(BMAP_DRIVING_POLICY_LEAST_TIME);
+                    break;
+                case "BMAP_DRIVING_POLICY_LEAST_DISTANCE":
+                    driving.setPolicy(BMAP_DRIVING_POLICY_LEAST_DISTANCE);
+                    break;
+                case "BMAP_DRIVING_POLICY_AVOID_HIGHWAYS":
+                    driving.setPolicy(BMAP_DRIVING_POLICY_AVOID_HIGHWAYS);
+                    break;
+            }
+
+            driving.setPolylinesSetCallback(routes => {
+                var points = [];
+                var index = 0, mileage = 0;
+                routes.forEach((route) => {
+                    mileage += (route.getDistance(false) / 1000);
+                    route.getPath().forEach((point) => {
+                        points.push({ latitude: point.lat, longitude: point.lng, serialNum: index++ });
+                    })
+                });
+                //打印生成的线路轨迹点
+                console.log({ newRoutes: points, newRouteDistance: Math.floor(mileage * 100) / 100 });
+            });
+            // driving.setSearchCompleteCallback(function (results) {
+            //     //console.log(results.getEnd().point);
+            //     console.log('方案个数',results.getNumPlans());
+            //     var routePlan = results.getPlan(0);
+            //     var numRoutes = routePlan.getNumRoutes();
+            //     var mileage = routePlan.getDistance(false) / 1000;
+            //     console.log(numRoutes, mileage);
+            //     var route = routePlan.getRoute(numRoutes-1);
+            //     var pointArray = route.getPath();
+            //     pointArray.forEach(function (item, index) {
+            //         console.log(item);
+            //     });
+            // });
+
+            driving.search(points[0],
+                points[points.length - 1],
+                { waypoints: points.slice(1, points.length - 1) });//waypoints表示途经点
+        }
+
+        document.getElementById('create_btn').addEventListener('click', onCreateLine, false);
+
+    </script>
+</body>
+
+</html>
