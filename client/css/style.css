@@ -1,81 +1,103 @@
-
 /*@font-face{
     font-family: "allen font";
     src:url("VeraSeBd.ttf");
 }*/
-body{
+
+body {
     /*font-family: "STXingkai";*/
     /*background-image: url(https://mdn.mozillademos.org/files/12059/startransparent.gif);*/
 }
-.border{
-    border:3px solid blue;
+
+.border {
+    border: 3px solid blue;
 }
-.border-dotted{
-    border:3px dotted blue;
+
+.border-dotted {
+    border: 3px dotted blue;
 }
-.padding{
-    padding:10px;
+
+.padding {
+    padding: 10px;
 }
-.visibility-hidden{
+
+.visibility-hidden {
     visibility: hidden;
 }
-#css-skill .nav li{
+
+#css-skill .nav li {
     display: inline-block;
-    width:40px;
-    height:40px;
-    margin:10px;
+    width: 40px;
+    height: 40px;
+    margin: 10px;
 }
-#css-skill .nav li:not(:last-child){
+
+#css-skill .nav li:not(:last-child) {
     border-right: solid red 1px;
 }
+
 
 /*#css-skill .nav li:last-child{
     border-right: none;
 }*/
+
+
 /*使用:not() */
 
+
 /*:active*/
-.button{
+
+.button {
     border: none;
 }
-.button:hover{
+
+.button:hover {
     font-family: "STXingkai";
-    background-color:green;
+    background-color: green;
 }
-.button:active{
+
+.button:active {
     background-color: red;
 }
 
-#background>div p{
-    background-image: url(https://mdn.mozillademos.org/files/12057/starsolid.gif),url("https://mdn.mozillademos.org/files/12059/startransparent.gif");
-    background-repeat: repeat-x,repeat-y;
-    background-attachment: fixed,scroll;
+#background>div p {
+    background-image: url(https://mdn.mozillademos.org/files/12057/starsolid.gif), url("https://mdn.mozillademos.org/files/12059/startransparent.gif");
+    background-repeat: repeat-x, repeat-y;
+    background-attachment: fixed, scroll;
 }
-#background .background-image{
+
+#background .background-image {
     background-image: url(https://mdn.mozillademos.org/files/12057/starsolid.gif);
 }
-#background .background-color{
-    background-color:rgba(255,0,0,.5);
+
+#background .background-color {
+    background-color: rgba(255, 0, 0, .5);
 }
-#background .background-repeat{
+
+#background .background-repeat {
     background-repeat: no-repeat;
 }
-#background .background-clip{
+
+#background .background-clip {
     background-clip: content-box;
 }
-#background .background-origin{
+
+#background .background-origin {
     background-origin: content-box;
 }
-#background .background-position{
+
+#background .background-position {
     background-position: center left;
 }
-#background .background-size{
+
+#background .background-size {
     background-size: 50% 25%;
 }
-#border .border{
-    border:30px solid blue
+
+#border .border {
+    border: 30px solid blue
 }
-#border .border-image{
+
+#border .border-image {
     border-image-source: url(https://mdn.mozillademos.org/files/4127/border.png);
     border-image-slice: 27;
     border-image-repeat: round;
@@ -83,13 +105,30 @@ body{
     border-image-outset: 1 1 3 1;
 }
 
-#table .table-layout{
+#table .table-layout {
     border-collapse: collapse;
     table-layout: fixed;
-    border:1px solid red;
+    border: 1px solid red;
 }
 
-#table>table th,#table>table td{
-    border:1px solid black;
+#table>table th, #table>table td {
+    border: 1px solid black;
 }
 
+#css-question .css-wrapper {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    border: 1px solid #333;
+}
+
+#css-question .css-wrapper .css-content {
+    background-color: #6699FF;
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -100px;
+    margin-left: -100px;
+}

@@ -1,24 +1,27 @@
-.red-dot{
-    width:5px;
-    height:5px;
+.red-dot {
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
     background-color: red;
 }
 
-.ligth{
-    width:100px;
-    height:100px;
+.ligth {
+    width: 100px;
+    height: 100px;
 }
 
-.red{
+.red {
     background-color: red;
 }
-.super-red{
-    background-color:#990000;
+
+.super-red {
+    background-color: #990000;
 }
-.black{
-    background-color:black;
+
+.black {
+    background-color: black;
 }
-.blue{
-    background-color:blue;
+
+.blue {
+    background-color: blue;
 }
