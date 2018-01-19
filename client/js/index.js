@@ -53,8 +53,8 @@ whenReady(function () {
                 navigatorObj[i] = window.navigator[i];
             }
         }
-
-        client.report(client.addSerialize(client.serverURL + '/api_receiver/client_info', client.serialize(navigatorObj)));
+        //向服务器上报浏览器数据数据
+        //client.report(client.addSerialize(client.serverURL + '/api_receiver/client_info', client.serialize(navigatorObj)));
     })();
 });
 
@@ -75,7 +75,7 @@ client.report = (function () {
     };
 })();
 
-client.serverURL = "http://" + document.domain + ":8081";
+client.serverURL = "http://119.29.146.193:8081";
 
 client.serialize = function (data) {
     if (typeof data !== 'object') {

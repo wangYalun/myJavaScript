@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>单页应用</title>
+    <script src="js/bom.js"></script>
+</head>
+
+<body>
+    <h3>测试路由</h3>
+    <ul id="navigation">
+        <li><a href="index.html" data-link="index.html">首页</a></li>
+        <li><a href="index2.html" data-link="index2.html">index2.html(JavaScript 浏览器环境测试)</a></li>
+        <li><a href="index3.html" data-link="index2.html">index3.html(设计模式 浏览器环境测试)</a></li>
+        <li><a href="index-mobile.html">index-mobile.html(移动浏览器环境测试)</a></li>
+        <li><a href="style.html">style.html(CSS 测试)</a></li>
+    </ul>
+    <div id="content">
+
+    </div>
+    <script>
+        var router = new Router(document.getElementById("navigation"));
+        router.init();
+        var content = document.getElementById("content");
+        router.route('index.html', function () {
+            content.innerHTML = "首页";
+        });
+
+        router.route('index.html', function () {
+            content.innerHTML = "首页";
+        });
+        router.route('index2.html', function () {
+            content.innerHTML = "index2.html";
+        })
+    </script>
+</body>
+
+</html>

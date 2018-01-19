@@ -110,6 +110,7 @@ var classnames = require('classnames');
     console.log(a.splice(0, 0, 'allen', 'bobo'));
     console.log(a);
     console.log(a.slice(0, 1));
+<<<<<<< HEAD
 
     a.every(function (item, index, array) {
 
@@ -122,3 +123,87 @@ var classnames = require('classnames');
     console.log(classnames(obj.name));
 
 })();
+=======
+
+    a.every(function (item, index, array) {
+
+    });
+    // a.filter(); //return Array
+    // a.some(); //return boolean
+    // a.map();// return Array
+    // a.forEach(function (item, index, array) {
+
+    // });
+    var str = a.reduce(function (prev, cur, index, array) {
+        return prev + "," + cur;
+    });
+    console.log(str);
+    console.log(str);
+    function foo(fn) {
+        return function () {
+            fn.apply(this, arguments);//this 指向 windows 
+        }
+    }
+
+});
+/**
+ * Date
+ */
+(function () {
+    var date = new Date();
+    Date.parse(date);// 返回date的毫秒数
+    Date.UTC(2017, 3); //年月
+    Date.now();//毫秒数
+    +new Date();//毫秒数
+})();
+/**
+ * 私有变量
+ */
+(function () {
+    //私有变量
+    function Person() {
+
+        var _num = 0;//私有变量
+
+        this.getNum = function () {
+            return _num;
+        };
+        this.setNum = function (num) {
+            _num = num;
+        }
+    }
+    //
+    var person = new Person();
+    console.log(person.getNum());
+    person.setNum(10)
+    console.log(person.getNum());
+
+    //静态私有变量
+
+    (function () {
+        var _name = "allen";
+
+        function StaticPerson() {
+
+        };
+
+        StaticPerson.prototype.getName = function () {
+            return _name;
+        };
+        StaticPerson.prototype.setName = function (name) {
+            _name = name;
+        };
+
+        Person.Person = StaticPerson;
+    })();
+
+    var person1 = new Person.Person();
+    var person2 = new Person.Person();
+    console.log(person1.getName());
+    person2.setName("bob");
+    console.log(person1.getName());
+
+})();
+
+console.log("fixed bug 101");
+>>>>>>> a14f075241ea36be9344213fe24f87e2a592463a
