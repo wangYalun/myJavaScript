@@ -7,6 +7,17 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+    <style>
+        .active {
+            color: red;
+        }
+
+        .font-size-30 {
+            font-size: 30px;
+        }
+    </style>
 </head>
 
 <body>
@@ -16,14 +27,56 @@
 
         <button v-on:click="reverseMessage">逆转</button>
         <input v-model='message' />
+        <!-- 列表渲染 -->
         <ol>
             <li v-for="todo in todos">{{todo.text}}</li>
         </ol>
+        <ul>
+            <li v-for="(item,index) in todos" v-bind:key='index'>{{index}}.{{item.text}}</li>
+        </ul>
+        <!-- 条件渲染 v-if -->
         <p v-if="seen">你可以看见我</p>
-
+        <p v-else>你看不到我~</p>
+        <!-- 在template使用 v-if -->
+        <template v-if="seen">
+            <h1> 在template 使用 v-if </h1>
+            <h2> 在使用template </h2>
+        </template>
+        <h1 v-show='seen'>v-show</h1>
         <span v-bind:title="message">鼠标悬停几秒钟</span>
 
         <todo-item v-for="item in todos" v-bind:todo="item" v-bind:key="item.id"></todo-item>
+
+        <div>{{_reverseMessage}}</div>
+        <div>{{_now}}</div>
+        <div>{{_fullName}}</div>
+        <input v-model='firstName' />
+        <input v-model='lastName' />
+        <div>
+            <p>
+                Ask a yes/no question:
+                <input v-model="question">
+            </p>
+            <p>{{ answer }}</p>
+        </div>
+        <div v-bind:class="{active:isActive}">this is red text</div>
+        <!-- 自定义组件 -->
+        <my-component class="font-size-30"></my-component>
+        <!-- 绑定内联样式 -->
+
+        <div v-bind:style="{color:'green'}">green text</div>
+        <!-- 自动添加前缀 -->
+        <div v-bind:style="{display:'flex'}">
+            <div>hehe</div>
+            <div>haha</div>
+        </div>
+        <button v-on:click="greet">GREET</button>
+
+        <!-- 事件修饰符 -->
+        <!-- 按键修饰符 -->
+        <input v-on:keyup.enter="greet"/>
+        <!-- 系统修饰键 -->
+        <input type="button" @click.ctrl="greet"/>
     </div>
 
 
@@ -34,6 +87,10 @@
             template: '<li>{{todo.text}}</li>'
         });
 
+        Vue.component('my-component', {
+            template: '<p class="active">Hello Component</p>'
+        })
+
         var data = {
             message: 'Hello Vue!',
             todos: [
@@ -41,16 +98,82 @@
                 { text: "学习Weex" },
                 { text: "买Mac" }
             ],
-            seen: true
+            seen: true,
+            firstName: "allen",
+            lastName: "wang",
+            fullName: "allen wang",
+            question: "",
+            answer: "I cannot give you an answer until you ask a question!",
+            isActive: true
         };
 
         var app = new Vue({
             el: '#app',
             data: data,
+            //事件处理
             methods: {
                 reverseMessage: function () {
                     console.log("fasdfasdfasd");
                     this.message = this.message.split("").reverse().join('');
+                },
+                greet: function (event) {
+                    console.log(event.target.tagName);
+                },
+                getAnswer: _.debounce(
+                    function () {
+                        if (this.question.indexOf('?') === -1) {
+                            this.answer = 'Questions usually contain a question mark. ;-)'
+                            return
+                        }
+                        this.answer = 'Thinking...'
+                        var vm = this
+                        axios.get('https://yesno.wtf/api')
+                            .then(function (response) {
+                                vm.answer = _.capitalize(response.data.answer)
+                            })
+                            .catch(function (error) {
+                                vm.answer = 'Error! Could not reach the API. ' + error
+                            })
+
+                    },
+                    500
+                )
+            },
+            //计算属性
+            computed: {
+                _reverseMessage: function () {
+                    return this.message.split('').reverse().join('');
+                },
+                //存在缓存
+                _now: function () {
+                    return Date.now();
+                },
+                _fullName: function () {
+                    return this.firstName + " " + this.lastName;
+                },
+                //计算属性的setter
+                __fullName: {
+                    set: function (val) {
+                        var name = val.split(' ');
+                        this.firstName = name[0];
+                        this.lastName = name[1];
+                    },
+                    get: function () {
+                        return this.firstName + " " + this.lastName;
+                    }
+                }
+            },
+            //侦听属性,可以用计算属性代替
+            watch: {
+                firstName: function (val) {
+                    this.fullName = val + " " + this.lastName;
+                },
+                lastName: function (val) {
+                    this.fullName = this.firstName + " " + val;
+                },
+                question: function (newQuestion, oldQuestion) {
+                    this.answer = 'waiting for you to stop typing...';
+                    this.getAnswer();
                 }
             }
         })
