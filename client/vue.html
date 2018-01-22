@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="./js/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
     <style>
@@ -74,22 +74,112 @@
 
         <!-- 事件修饰符 -->
         <!-- 按键修饰符 -->
-        <input v-on:keyup.enter="greet"/>
+        <input v-on:keyup.enter="greet" />
         <!-- 系统修饰键 -->
-        <input type="button" @click.ctrl="greet"/>
+        <input type="button" @click.ctrl="greet" />
+
+        <my-button></my-button>
+        <input v-model="message" />
+        <all-child v-bind:message="message" v-bind="obj"></all-child>
+
+        <props-check v-bind:age="20" name="allen" sex="男" phone-num="18600699358" v-on:click.native="incrementTotal"></props-check>
+
+        <div>
+            <p>{{total}}</p>
+            <button-counter v-on:increment="incrementTotal"></button-counter>
+            <button-counter v-on:increment="incrementTotal"></button-counter>
+            <button-counter v-on:increment="incrementTotal"></button-counter>
+        </div>
     </div>
 
 
     <script>
 
+    
+
         Vue.component('todo-item', {
-            props: ['todo', 'key'],
+            props: ['todo'],
             template: '<li>{{todo.text}}</li>'
         });
 
+
+
         Vue.component('my-component', {
             template: '<p class="active">Hello Component</p>'
-        })
+        });
+
+        Vue.component('my-button', {
+            template: '<button>{{message}}</button>',
+            data: function () {
+                return {
+                    message: 0
+                }
+            }
+        });
+
+        Vue.component('all-child', {
+            props: ['message'],
+            template: '<p v-on:click="addMessage">{{message}}{{myMessage}}{{computedMessage}}</p>',
+            data: function () {
+                return { myMessage: this.message }
+            },
+            methods: {
+                addMessage: function () {
+                    this.myMessage += 2;
+                }
+            },
+            computed: {
+                computedMessage: function () {
+                    return this.message + "computedMessage";
+                }
+            }
+        });
+
+        //Prop验证
+        Vue.component('props-check', {
+            props: {
+                name: {
+                    type: String,
+                    required: true
+                },
+                age: {
+                    type: Number,
+                    default: 18
+                },
+                sex: String,
+                phoneNum: {
+                    validator: function (value) {
+                        return /^1[0-9]{10}$/.test(value);
+                    }
+                }
+            },
+            template: '<p>{{name}}-{{age}}-{{sex}}-{{phoneNum}}</p>'
+        });
+
+        //非Prop特性
+        Vue.component('bs-date-input', {
+
+        });
+
+        //自定义事件
+        Vue.component('button-counter', {
+            template: '<button v-on:click="incrementCounter">{{counter}}</button>',
+            data: function () {
+                return {
+                    counter: 0
+                }
+            },
+            methods: {
+                incrementCounter: function () {
+                    this.counter += 1;
+                    //触发父模板传入进来的事件
+                    this.$emit('increment');
+                }
+            }
+        });
+        //给组件绑定原生事件
+
+
 
         var data = {
             message: 'Hello Vue!',
@@ -98,13 +188,18 @@
                 { text: "学习Weex" },
                 { text: "买Mac" }
             ],
+            obj: {
+                name: "allen",
+                age: 20
+            },
             seen: true,
             firstName: "allen",
             lastName: "wang",
             fullName: "allen wang",
             question: "",
             answer: "I cannot give you an answer until you ask a question!",
-            isActive: true
+            isActive: true,
+            total: 0
         };
 
         var app = new Vue({
@@ -112,6 +207,9 @@
             data: data,
             //事件处理
             methods: {
+                incrementTotal: function () {
+                    this.total += 1;
+                },
                 reverseMessage: function () {
                     console.log("fasdfasdfasd");
                     this.message = this.message.split("").reverse().join('');
@@ -176,7 +274,9 @@
                     this.getAnswer();
                 }
             }
-        })
+        });
+
+
     </script>
 </body>
 
