@@ -1,0 +1,16 @@
+// @import "_color.scss";
+
+$color-grey:#aaa;
+$color-white:#fff;
+
+.button-white{
+    width:200px;
+    height:50px;
+    background-color:$color-white;
+}
+
+.button-grey{
+    background-color: $color-white;
+    width:100px;
+    height: 100px;
+}

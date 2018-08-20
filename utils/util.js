@@ -1,4 +1,5 @@
 
+//@flow
 
 export default {
     getSessionStorage: function (item) {
@@ -115,5 +116,66 @@ export default {
         document.body.appendChild(downloadLink);
         downloadLink.click();
         document.body.removeChild(downloadLink);
+    },
+    /**
+     * 
+     * @param {Number|String} micro_time 
+     * @param {String} format
+     * @return {String} 
+     */
+    millisecondToTime(micro_time, format) {
+        var result = "";
+        var left = micro_time;
+        if (/hh/i.test(format)) {
+            var hours = parseInt((left) / (60 * 60 * 1000));
+            left = left - (60 * 60 * 1000 * hours);
+
+            if (hours > 0) {
+                result += (hours > 9 ? hours : "0" + hours);
+                //str = (minutes > 9 ? minutes : "0" + minutes) + "";
+            } else {
+                result += "00";
+            }
+            if (/mm/i.test(format)) {
+                result += ":";
+            }
+        }
+        if (/mm/i.test(format)) {
+            var minutes = parseInt((left) / (60 * 1000));
+            left = left - (60 * 1000 * minutes);
+
+            if (minutes > 0) {
+                result += (minutes > 9 ? minutes : "0" + minutes);
+                //str = (minutes > 9 ? minutes : "0" + minutes) + "";
+            } else {
+                result += "00";
+            }
+            if (/ss/i.test(format)) {
+                result += ":";
+            }
+        }
+        if (/ss/i.test(format)) {
+            var seconds = parseInt(left / 1000);
+            left = left - seconds * 1000;
+
+            if (seconds > 0) {
+                result += (seconds > 9 ? seconds : "0" + seconds);
+            } else {
+                result += "00";
+            }
+            if (/\./i.test(format)) {
+                result += ".";
+            }
+        }
+        if (/\./i.test(format)) {
+            var micro_s = parseInt(left / 10);
+            if (micro_s > 0) {
+                result += (micro_s > 9 ? micro_s : "0" + micro_s) + "";
+            } else {
+                result += "00";
+            }
+        }
+
+        return result;
     }
 };

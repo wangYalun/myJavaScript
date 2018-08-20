@@ -110,20 +110,6 @@ var classnames = require('classnames');
     console.log(a.splice(0, 0, 'allen', 'bobo'));
     console.log(a);
     console.log(a.slice(0, 1));
-<<<<<<< HEAD
-
-    a.every(function (item, index, array) {
-
-    });
-});
-
-
-(function () {
-    const obj = { name: "allen" }
-    console.log(classnames(obj.name));
-
-})();
-=======
 
     a.every(function (item, index, array) {
 
@@ -206,4 +192,3 @@ var classnames = require('classnames');
 })();
 
 console.log("fixed bug 101");
->>>>>>> a14f075241ea36be9344213fe24f87e2a592463a

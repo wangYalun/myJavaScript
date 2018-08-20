@@ -1,4 +1,4 @@
-var extend=require("../tools/index").extend;
+var extend = require("../tools/index").extend;
 //列表类
 function List() {
     this.listSize = 0;
@@ -55,39 +55,39 @@ List.prototype.clear = function () {
     this.listSize = this.pos = 0;
 }
 //contains:判断给定值是否在列表中
-List.prototype.contains=function(element){
-    for(var i=0;i<this.listSize;++i){
-        if(this.dataStore[i]==element){
+List.prototype.contains = function (element) {
+    for (var i = 0; i < this.listSize; ++i) {
+        if (this.dataStore[i] == element) {
             return true;
         }
     }
     return false;
 }
 //遍历列表
-extend.call(List.prototype,{
-    front:function(){
-        this.pos=0;
+extend.call(List.prototype, {
+    front: function () {
+        this.pos = 0;
     },
-    end:function(){
-        this.pos=this.listSize-1;
+    end: function () {
+        this.pos = this.listSize - 1;
     },
-    prev:function(){
-        if(this.pos>0){
+    prev: function () {
+        if (this.pos > 0) {
             --this.pos;
         }
     },
-    next:function(){
-        if(this.pos<this.listSize-1){
+    next: function () {
+        if (this.pos < this.listSize - 1) {
             ++this.pos;
         }
     },
-    currPos:function(){
+    currPos: function () {
         return this.pos;
     },
-    moveTo:function(postion){
-        this.pos=postion;
+    moveTo: function (postion) {
+        this.pos = postion;
     },
-    getElement:function(){
+    getElement: function () {
         return this.dataStore[this.pos];
     }
 });

@@ -12,7 +12,8 @@
     function greeter(person: string) {
         return "Hello, " + person;
     }
-    var user = [1, 2, 3, 4];
+    // var user = [1, 2, 3, 4];
+    var user = "Allen";
 
 
     console.log(greeter(user));

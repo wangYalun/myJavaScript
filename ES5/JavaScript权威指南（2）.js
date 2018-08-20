@@ -1,12 +1,102 @@
 /**
  * JavaScript 权威指南 学习笔记 代码实践
  */
+/**
+ * 第一章 JavaScript概述
+ * 描述网页内容的HTML，描述网页样式的CSS，描述网页行为的JavaScript
+ */
+/**
+ * 第二章 词法结构
+ */
+
+/**
+ * 第三章 类型，值和变量
+ */
+(function () {
+    Math.abs(-10);//10
+    Math.floor(0.1);//0
+    Math.ceil(0.1);//1
+    Math.pow(2, 10);//2^10
+    Math.random();
+
+    console.log(Number.MAX_VALUE + 2);
+    console.log(Number.MAX_VALUE + 1);
+    console.log(Infinity);
+    console.assert(isNaN(0 / 0));
+
+    console.log(-0 === 0);
+
+    var str = "allen\
+    name\
+    haha\
+    fasdfas\
+    "; //在ES5中，可以用反斜杠来表示多行字符串
+    console.log(str);
+    "\n \r \v \f ";
+
+    console.log(+[])
+
+});
+
+
 
 /**
  * 第四章 表达式和运算符
  */
 
 (function () {
+
+    //4.7.7
+    var a = 10;
+    var b;
+    function log(a) {
+        console.log(a);
+        return 10;
+    }
+    // log("a") = log("b");//报错,其实首先还是先计算log("a")，从左往右的执行顺序不变
+
+    // (a + a) = log("10");//报错
+
+    b = (a++) + a;// 1.计算b,2.计算a++，返回值为c,3.计算a,4. 计算c+a,5. 将c+a的结果赋值给b
+
+    console.log(b);
+
+    console.log(6.5 % 2.1)//0.2，最好不要对浮点数取模
+
+
+
+    var z, x;
+
+    console.log(z === x);
+
+    ("Zoo" > "aardvark")//false
+    //所有的大写ASCII字母都“小于”小写的ASCII字母。
+
+    /**
+     * 第二次阅读笔记 2018.7.2
+     */
+    1 + 1;
+    1 + "2";
+    "1" + 2;
+    11 < 3;//false
+    "11" < "3"; //字符串的比较
+    "11" < 3;//数字的比较
+    11 < "3";//数据的比较
+
+    "one" < 3;//数字的比较，one将转换为NaN 
+
+    //逻辑与&&
+    /**
+     * 逻辑与&&,并不是总是返回 true 或者 false ，实际上，当左操作数为假值时，直接返回 左操作数，如果左操作数为真值，才会去计算 右操作数，并直接返回右操作数。
+     * a&&a.x ，当a是真值时，才会计算 a.x 的值
+     */
+    /**
+     * 逻辑或||
+     * 当左操作符是真值时，直接返回 左操作符 的值，当左操作符为假值时，才会去计算右操作符的值，并直接返回。
+     */
+
+
+
     //"use strict"
     //严格模式下，this 不指向全局对象
     if (this === (global)) {
@@ -71,6 +161,8 @@
  * 第五章 语句
  */
 (function () {
+
+    // "use strict"
     var n = 1;
     switch (n) {
         case 1:
@@ -86,14 +178,54 @@
     var o;
     //o.a.a;//会中断代码
 
+    //抛出异常 
+    /**
+     * 当抛出异常时，JavaScript 解析器会立即停止当前正在执行的逻辑，并跳转至就近的异常处理程序。异常处理程序是try/catch/finally 语句中的catch 从句编写的
+     * 如果抛出的异常的代码块没有一条相关联的catch 从句，解析器会检查更高层的闭合代码块，看它是否有相关联的异常处理程序。
+     */
+
+    var fn = (function () {
+
+        throw new TypeError('type is error');
+
+    });
+
+    try {
+        fn();
+    } catch (error) {
+        //console.log(error);
+    }
+
+    var j = 0;
+    while (j < 10) {
+        try {
+            if (true) {
+                //throw new Error("Error");
+            }
+            continue;
+        } finally {
+            console.log("j");
+            j++;
+        }
+    }
+
+    for (var i = 0; i < 10; i++) {
+
+        if (i === 5) {
+            continue;
+        }
+    }
+
+
+
+
     try {
         o.a.a;
         throw new Error('fasdfasd');
     } catch (e) {
         //不会中断代码
         console.log(e);
-    }
-    finally {
+    } finally {
         console.log('finally');
     }
 
@@ -109,6 +241,46 @@
         if (o === undefined) debugger;
         console.log('fasd');
     }
+    f();
+
+
+
+    var z = { a: 0 };
+    Object.freeze(z);
+    z.b = 0;
+
+    var hasStrictMode = (function () { "use strict"; return this === void 0 }());
+
+    console.log(hasStrictMode);
+
+    //use strict
+    (function () {
+        "use strict";
+        (function () {
+            console.log(typeof this);
+            //在严格模式下，当通过call和apply来调用函数时，其中this 的值就是通过call或者apply传入的第一个参数。
+            //在非严格模式下，null 和undefined 会被转化未全局对象，非对象值会转换未对象值
+        }).call(10);
+
+        (function (name1, name2) {
+            console.log(arguments);
+            arguments[0] = "bob";
+            arguments[1].name = "bob";
+            console.log(arguments);
+            console.log(name1);//allen
+            console.log(name2);//{name:"bob"}
+            //在严格模式下，函数里的arguments对象用户传入函数值的静态副本。
+            //在非严格模式下，arguments 里的数组元素和函数参数都是指向同一个值的引用。
+        })("allen", { name: "allen" })
+        var name = "allen";
+        var nameObj = { name: "allen", name: "bob" };
+
+        var name = "bob";
+
+        // delete nameObj.name;
+
+    })();
+
 });
 
 
@@ -145,7 +317,210 @@
     o.toString();
     var o = Object.create(Object.prototype);
 
-    //var o=Object.create(null); //o不继承任何属性和方法
+    //var o=Object.create(null); //o不继承任何属性和方法  
+    /**
+     * Object.create 其中的一个用途就是防止库函数无意间（无恶意地）修改那些不受你控制的对象。
+     * 不是将对象直接作为参数传入函数，而是将他的继承对象传入函数。 
+     * 当函数读取继承对象时，实际上读取的是继承来的值。如果给继承对象的属性赋值，则这些属性只会影响到这个继承对象自身，而不是原始对象。
+     */
+
+    /**
+     * 关联数组（associative arry），也称作散列，映射或字典（dictionary）。JavaScript对象都是关联数组。
+     */
+    var _obj = {
+        _name: "allen",
+        get name() {
+            return this._name;
+        },
+        set name(name) {
+            this._name = name;
+        }
+
+    }
+
+    var p = Object.create(_obj);
+    p.name = "bob";
+    console.log(p.name);
+    console.log(p._name);
+    console.log(_obj.name);
+
+    delete Object.prototype;
+
+    console.log(p.hasOwnProperty("_name"));
+
+    console.log(p.propertyIsEnumerable("name"));
+
+    for (var i in p) {
+        if (!p.hasOwnProperty(i)) { continue; }
+    }
+    /**
+     * 把source 中的属性复制到target中，
+     * 如果target 和source 有同名属性，则覆盖target中的属性
+     * 这个函数不处理getter和setter以及复制属性
+     */
+    function extend(target, source) {
+        for (var i in source) {
+            target[i] = source[i];
+        }
+        return target;
+    }
+
+    /**
+     * 将source 可枚举的属性复制到target中，
+     * 如果target和source存在相同的属性，o中的属性将不受影响
+     */
+    function merge(target, source) {
+        for (var i in source) {
+            if (target.hasOwnProperty[i]) { continue; }
+            target[i] = source[i];
+        }
+        return target;
+    }
+    /**
+     * 如果target中的属性在source中没有，则删除这个属性
+     */
+    function restrict(target, source) {
+        for (var i in target) {
+            if (!(i in source)) {
+                delete target[i];
+            }
+        }
+        return target;
+    }
+    /**
+     * 如果target中的属性在source中存在同名属性，则从target中删除这个属性
+     */
+
+    function subtract(target, source) {
+        for (var i in target) {
+            if (i in source) {
+                delete target[i];
+            }
+        }
+        return target;
+    }
+
+    /**
+     * 返回一个新对象，这个对象同时拥有target和p的属性
+     * 如果target和source存在同名属性，则使用source中的属性
+     */
+    function union(target, source) {
+        return extend(extend({}, target), source)
+    }
+
+    /**
+     * 返回一个新对象，这个对象同时拥有target和source的属性
+     */
+    function intersection(target, source) {
+        return restrict(extend({}, target), source);
+    }
+    /**
+     * 返回一个数组，这个数组包含的是o中可枚举的自有属性的名字，相当于Object.keys
+     */
+    function keys(obj) {
+        if (typeof obj != 'object' || typeof obj != 'function') throw new TypeError();
+        var result = [];
+        for (var i in obj) {
+            if (obj.hasOwnProperty(i)) {
+                result.push(i);
+            }
+        }
+        return result;
+    }
+    //Object.getOwnPropertyNames和Object.keys的区别，getOwnPropertyNames 不可枚举的也会有。
+    console.log(Object.getOwnPropertyNames(p));
+
+    /**
+     * getter 和 setter
+     */
+    var o = {
+        _name: "allen",
+        get name() {
+            return this._name;
+        },
+        set namea(name) {
+            this._name = name;
+        }
+    }
+    o.name = "bob";
+
+    var random = {
+        get octet() {
+            return Math.floor(Math.random() * 256);
+        },
+        get uint16() {
+            return Math.floor(Math.random() * 65536);
+        }
+    }
+    console.log(Object.getOwnPropertyDescriptor(random, 'octet'));
+    console.log(Object.keys(random));
+
+    Object.defineProperty(o, "_age", { value: 20, writable: true, configurable: true, enumerable: true });
+
+    Object.defineProperty(o, "age", {
+        get: function () {
+            return this._age;
+        }, configurable: true, enumerable: true
+    });
+
+    console.log(Object.getPrototypeOf(p));
+
+    // console.log(p.isPrototypeOf(_obj));
+    console.log(_obj.isPrototypeOf(p))
+
+    console.log(p.__proto__);
+
+    /**
+     * classof 函数
+     */
+    function classof(o) {
+        if (o === null) return 'Null'
+        if (o === undefined) return 'Undefined'
+        return Object.prototype.toString.call(o).slice(8, -1);
+    }
+    console.log("Allen");
+    console.log(classof([]));
+
+    console.log(Object.isExtensible(o));
+
+    Object.preventExtensions(o);
+
+    console.log(Object.isExtensible(o));
+
+    Object.seal(o);
+
+    //创建一个封闭对象，包括一个冻结的原型和一个不可枚举的属性
+    var q = Object.seal(Object.create(Object.freeze({ x: 1 }), { y: { value: 2, writable: true } }));
+
+    console.log(q.x, q.y);
+    q.x = 3;
+    q.y = 4;
+    console.log(q.x, q.y);
+
+
+
+    //console.log(p.constructor.prototype)
+
+    console.log(Object.keys(o));
+
+    console.log(o.name);
+
+    /**
+     * 改进版 extend
+     */
+    function extendPro(target, source) {
+        //得到所有的自由属性，包括不可枚举的属性
+        var names = Object.getOwnPropertyNames(source);
+        //遍历它们
+        for (var i = 0, len = names.length; i < len; i++) {
+            //如果属性已经存在，则跳过
+            if (names[i] in target) { continue }
+            var desc = Object.getOwnPropertyDescriptor(source, names[i]);
+            Object.defineProperty(target, names[i], desc);
+        }
+    }
+
+
 
     function Person() {
 
@@ -166,7 +541,7 @@
         o = JSON.parse(jsonStr + 'fasdf');
         //var jsonStr=JSON.stringify(o);
     } catch (e) {
-        console.log(e);
+        //console.log(e);
     }
 });
 
@@ -176,7 +551,7 @@
 
 (function () {
     var a = [1, undefined, 3];
-    //delete a[0];
+    delete a[0];
     //delete 操作不会改变length的值,变成稀疏数组
     //删除数组元素，调用splice方法
     //slice 截取
@@ -304,6 +679,30 @@
         return [].slice.call(a, n || 0);
     }
 
+
+    /**
+     * 利用闭包实现私有属性存取器方法
+     */
+    function addPrivateProperty(o, name, predicate) {
+        var value;
+
+        o['get' + name] = function () {
+            return value;
+        }
+        o['set' + name] = function (v) {
+            if (predicate && !predicate(v)) {
+                throw Error("set " + name + "invalid value " + v)
+            } else {
+                value = v;
+            }
+        }
+    }
+
+    addPrivateProperty(o,"Name");
+
+    o.setName("Allen");
+    console.log(o.getName());
+
     //高阶函数-记忆
     function memorize(f) {
         var cache = {};
@@ -348,7 +747,7 @@
     var endTime = +new Date();
     console.log(endTime - startTime);
 
-});
+})();
 
 
 
@@ -878,7 +1277,7 @@
 
     console.log("question 3", text.match(/\b\w+\b/g));// 将所有单词匹配出来，返回一个数组
 
-    console.log("fas0001000,000fas".replace(/[^1-9]*([1-9][\d]*)[^\d]*/,"$1"));
+    console.log("fas0001000,000fas".replace(/[^1-9]*([1-9][\d]*)[^\d]*/, "$1"));
     console.log("fasdf$12319098098~fsdf".match(/[\$￥][1-9][0-9]*[.,]*[0-9]*(?=~)/g));
 
     console.log(/[1-9][0-9]*[.,]*[0-9]*/.exec('fasdfa2342,2342adsf'));
@@ -888,7 +1287,7 @@
      * 10.3 RegExp 对象
      */
     i = /^0?\d{11}$/.test("018600699358");
-    console.log("question 5",i);
+    console.log("question 5", i);
     i = /^(13[0-9]|15[0-9]|17[0-9]|18[0-9]|14[0-9])[0-9]{8}$/.test("18942339954");
     i = /^[\w]+([-+.]\w+)*@\w+([-.]\w+)*$/.test("326402399+allen.wang@qq.com");
     //i=/[\w]+/.test("326402399");
@@ -897,7 +1296,7 @@
 
     console.log(i);
 
-})();
+});
 
 /**
  * 第二部分 客户端JavaScript 

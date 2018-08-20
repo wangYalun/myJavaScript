@@ -460,7 +460,245 @@
 	fun.call(obj);
 
 	fun2.call(obj);
+});
+
+(function () {
+	const a = b => c => {
+		console.log("Hello");
+		return "Hello";
+	}
+	const _a = function (_b) {
+
+		return function (c) {
+			console.log("Hello");
+			return "Hello";
+		}
+	}
+	a();
+	_a();
+});
+
+(function () {
+	function* gen(x, y) {
+
+		var z = yield x;
+
+		return z;
+	}
+	var myGen = gen(0, 1);
+	console.log(myGen.next(0));
+	console.log(myGen.next(2));
+
+	function* fibonacci() {
+		let [prev, curr] = [0, 1];
+		for (; ;) {
+			[prev, curr] = [curr, prev + curr];
+			yield curr;
+		}
+	}
+
+	for (let n of fibonacci()) {
+		if (n > 1000) break;
+		console.log(n);
+	}
+
+
+
+});
+
+(function () {
+
+	//学习生成器Generator 函数之前，先了解迭代器(Iterator)
+
+	let arr = [1, 2, 3];
+
+	for (let item of arr) {
+		console.log(item);
+	}
+
+	var helloworldGenerator = function* () {
+		console.log("1");
+		var first = yield "Hello";
+		console.log("2");
+		yield "World" + first;
+		console.log("3");
+		return "Allen";
+	}
+
+	function* demo() {
+		// console.log('Hello' + yield); // SyntaxError
+		// console.log('Hello' + yield 123); // SyntaxError
+
+		console.log('Hello' + (yield)); // OK
+		console.log('Hello' + (yield 123)); // OK
+	}
+	for (let item of helloworldGenerator()) {
+		console.log(item)
+	}
+	const hello = helloworldGenerator();
+
+	console.log(hello.next());
+	console.log(hello.next("Allen"));
+	console.log(hello.next());
+
+	function* test() {
+		console.log("Generator");
+		return "Allen";
+	}
+
+	console.log(test().next());
+
+
+	//Generator 函数的异步应用
+
+	function* gen(x) {
+		var y = yield x + 2;
+		return y;
+	}
+
+	var g = gen(1);
+
+	console.log(g.next());
+	console.log(g.next(1));
+
+	/**
+	 * Thunk 函数
+	 * 任何函数，只要有回调函数，就能写成Thunk函数的形式。
+	 * 
+	 */
+	//ES5版本
+	var Thunk = function (fn) {
+		return function () {
+			var args = Array.prototype.slice.call(arguments);
+			return function (callback) {
+				args.push(callback);
+				return fn.apply(this, args);
+			}
+		}
+	}
+
+	const _Thunk = function (fn) {
+		return function (...args) {
+			return function (callback) {
+				return fn.call(this, ...args, callback);
+			}
+		}
+	}
+
+	function f(a, cb) {
+		cb(a);
+	}
+
+	const ft = Thunk(f);
+
+	ft("allen Thunk")(console.log);
+
+	//读文件为例
+	var fs = require('fs');
+	var thunkify = require('thunkify');
+
+	var readFileThunk = thunkify(fs.readFile);
+
+	var myGen = function* () {
+		var r1 = yield readFileThunk('../package.json');
+		console.log(r1.toString());
+		var r2 = yield readFileThunk('../test.js');
+		console.log(r2.toString());
+	}
+	//手动执行
+	// var myG = myGen();
+	// var r1 = myG.next();
+	// r1.value(function (err, data) {
+	// 	if (err) throw err;
+	// 	var r2 = myG.next(data);
+	// 	r2.value(function (err, data) {
+	// 		if (err) throw err;
+	// 		myG.next(data);
+	// 	})
+	// })
+
+
+	/**
+	 * 自动执行
+	 */
+
+	function run(fn) {
+		var gen = fn();
+
+		function next(err, data) {
+			if (err) throw err;
+			var result = gen.next(data);
+			if (result.done) return;
+			result.value(next);
+		}
+
+		next();
+	}
+
+	//run(myGen);
+	var co = require('co');
+	co(myGen);
+ 
 })();
+
+(function () {
+	var fs = require('fs');
+
+	/**
+	 * 基于Promise 对象的自动执行
+	 */
+
+	var readFile = function (fileName) {
+		return new Promise(function (resolve, reject) {
+			fs.readFile(fileName, function (error, data) {
+				if (error) return reject(error);
+				resolve(data);
+			})
+		})
+	}
+	var gen2 = function* () {
+		var r1 = yield readFile('../git_dev.js');
+		console.log(r1.toString());
+		var r2 = yield readFile('../debug.log');
+		console.log(r2.toString());
+	}
+
+	//手动执行上面的Generator 函数
+	// var g2 = gen2();
+	// g2.next().value.then(function (data) {
+	// 	//console.log(data.toString());
+	// });
+	// g2.next().value.then(function (data) {
+	// 	console.log(data.toString());
+	// })
+	// // g2.next()
+
+	// function run(gen) {
+	// 	var g = gen();
+
+	// 	function next(data) {
+	// 		var result = g.next(data);
+	// 		if (result.done) return result.value;
+	// 		result.value.then(function (data) {
+	// 			next(data);
+	// 		})
+	// 	}
+	// 	next();
+	// }
+	// run(gen2);
+
+	var co = require('co');
+	co(gen2);
+
+	co(function* () {
+		var res = yield [
+			Promise.resolve(1),
+			Promise.resolve(2)
+		];
+		console.log(res)
+	})
+});
+
 
 
 

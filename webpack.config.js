@@ -1,35 +1,35 @@
 var webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 var path = require('path');
-var uglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
+
 
 module.exports = {
- // devtool: 'cheap-source-map',
-  entry: [
-    path.resolve(__dirname, 'app/sdk/data.client.js'),
-  ],
+  entry: {
+    main: './React/index.js'
+  },
+  devServer: {
+    contentBase: path.resolve(__dirname, 'React/dist')
+  },
   output: {
-    path: __dirname + '/app/sdk',
-    publicPath: '/',
-    filename: './data.client.min.js'
+    path: path.resolve(__dirname, 'React/dist'),
+    filename: 'index.js'
   },
   module: {
-    loaders: [
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['env', 'react']
+          }
+        },
+      }
     ]
   },
-  resolve: {
-    extensions: ['', '.js', '.jsx'],
-  },
   plugins: [
-    new webpack.optimize.DedupePlugin(),
-    new uglifyJsPlugin({
-      compress: {
-        warnings: false
-      }
-    }),
-    new webpack.DefinePlugin({
-      "process.env": {
-        NODE_ENV: JSON.stringify("production")
-      }
-    })
+    new webpack.optimize.UglifyJsPlugin(),
+    new HtmlWebpackPlugin({ title: '学习用' })
   ]
 };

@@ -35,14 +35,11 @@ body {
     border-right: solid red 1px;
 }
 
-
 /*#css-skill .nav li:last-child{
     border-right: none;
 }*/
 
-
 /*使用:not() */
-
 
 /*:active*/
 
@@ -132,3 +129,40 @@ body {
     margin-top: -100px;
     margin-left: -100px;
 }
+
+#css-grid .wrapper {
+    display: grid;
+    grid-template-columns: 200px repeat(auto-fill, 100px) 300px;
+    grid-gap: 10px;
+    grid-auto-rows: minmax(100px, auto);
+}
+
+/* #css-grid .one {
+    grid-column: 1 / 3;
+    grid-row: 1;
+}
+
+#css-grid .two {
+    grid-column: 2 / 4;
+    grid-row: 1 / 3;
+}
+
+#css-grid .three {
+    grid-row: 2 / 5;
+    grid-column: 1;
+}
+
+#css-grid .four {
+    grid-column: 3;
+    grid-row: 3;
+}
+
+#css-grid .five {
+    grid-column: 2;
+    grid-row: 4;
+}
+
+#css-grid .six {
+    grid-column: 3;
+    grid-row: 4;
+} */
