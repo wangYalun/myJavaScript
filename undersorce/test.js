@@ -111,14 +111,14 @@ var fn4 = _.once(function (value) {
     console.log(value);
 });
 
-fn4(100);
-fn4(100);
-fn4(100);
+// fn4(100);
+// fn4(100);
+// fn4(100);
 
-fn3(3)
-fn3(4)
-fn3(5)
-fn3(6)
+// fn3(3)
+// fn3(4)
+// fn3(5)
+// fn3(6);
 
 
 

@@ -5,11 +5,12 @@ var path = require('path');
 
 
 module.exports = {
+  mode: 'none',
   entry: {
     main: './React/src/index.js'
   },
   devServer: {
-    contentBase: path.resolve(__dirname, 'React/dist')
+    contentBase: path.resolve(__dirname, 'React/public')
   },
   output: {
     path: path.resolve(__dirname, 'React/dist'),
@@ -23,7 +24,8 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['env', 'react']
+            presets: ['@babel/preset-env', '@babel/preset-react'],
+            plugins: ['@babel/plugin-proposal-class-properties']
           }
         },
       },
@@ -35,10 +37,10 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.optimize.UglifyJsPlugin(),
-    new HtmlWebpackPlugin({ title: '学习用', template: path.resolve(__dirname, 'React/public/index.html') }),
-    new CopyWebpackPlugin([
-      { from: path.resolve(__dirname, 'React/public'), to: path.resolve(__dirname, 'React/dist') }
-    ])
+    // new webpack.optimize.UglifyJsPlugin(),
+    new HtmlWebpackPlugin({ template: "./React/public/index.html" }),
+    // new CopyWebpackPlugin([
+    //   { from: path.resolve(__dirname, 'React/public'), to: path.resolve(__dirname, 'React/dist') }
+    // ])
   ]
 };

@@ -188,6 +188,27 @@
 
 	console.log(typeof Test);
 
+	const bar = Symbol('bar');
+	const snaf = Symbol('snaf');
+
+	class myClass {
+		// 公有方法
+		foo(baz) {
+			this[bar](baz);
+		}
+
+		// 私有方法
+		[bar](baz) {
+			return this[snaf] = baz;
+		}
+	};
+
+	const c = new myClass();
+
+	c.printName("allen");
+
+
+
 
 });
 
@@ -506,6 +527,9 @@
 
 });
 
+/**
+ * Generator 函数
+ */
 (function () {
 
 	//学习生成器Generator 函数之前，先了解迭代器(Iterator)
@@ -638,15 +662,13 @@
 	//run(myGen);
 	var co = require('co');
 	co(myGen);
- 
-})();
 
+});
+/**
+ * 基于Promise 对象的自动执行
+ */
 (function () {
 	var fs = require('fs');
-
-	/**
-	 * 基于Promise 对象的自动执行
-	 */
 
 	var readFile = function (fileName) {
 		return new Promise(function (resolve, reject) {
@@ -688,6 +710,7 @@
 	// run(gen2);
 
 	var co = require('co');
+
 	co(gen2);
 
 	co(function* () {
@@ -698,6 +721,186 @@
 		console.log(res)
 	})
 });
+
+(function () {
+
+	var p = new Promise(function (resolve, reject) {
+		//fetch("https://localhost:8000").then(resolve);
+		setTimeout(function () {
+			//throw new Error("this is allen");
+			resolve("resolve");
+		}, 1000);
+	})
+
+	p.then(function (res) {
+		// throw new Error("this is a error");
+		return res + "then1";
+	}).then(function (res) {
+		console.log(res + "then2");
+		return res + "then2";
+	}).catch(function (error) {
+		console.log(error);
+		return "after catch error";
+	}).then(function (res) {
+		console.log(res);
+	})
+
+	var obj = {
+		tex: "10人乘坐，ABCD",
+		tok: "24.da3dbdb8069198c5509b873ee720bfe6.2592000.1539247312.282335-11372208",
+		cuid: "allen",
+		ctp: "1",
+		lan: "zh",
+		per: 0
+	}
+
+	var parts = [];
+	for (var i in obj) {
+		parts.push(encodeURIComponent(i) + "=" + encodeURIComponent(obj[i]));
+	}
+	var url = "https://tsn.baidu.com/text2audio?" + parts.join("&");
+
+	console.log(url);
+
+
+
+
+});
+
+(function () {
+	/**
+	 * 学习了解async 函数
+	 */
+	// 我们一般的写法是 
+	const co = require("co");
+	const processFn = () => new Promise((resolve) => [
+		setTimeout(() => {
+			resolve("Hello" + Math.random());
+		}, 1000)
+	])
+
+	function* printRandomNum() {
+		const r1 = yield processFn();
+		const r2 = yield processFn();
+		console.log(r1);
+		console.log(r2);
+	}
+	//co(gen);
+
+	// 使用 async 函数写法
+
+	const asyncPrintRandomNum = async function () {
+
+		for (var i = 0; i < 10; i++) {
+			console.log(await processFn());
+		}
+
+		const r1 = await processFn();
+		return r1;
+	}
+
+	asyncPrintRandomNum().then(res => {
+		console.log(res);
+	});
+
+
+
+});
+
+/**
+ *  Iterator 迭代器
+ */
+(function () {
+
+	const obj = {
+		[Symbol.iterator]() {
+			return {
+				next() {
+					return {
+						value: 1,
+						done: true
+					}
+				}
+			}
+		}
+	}
+
+
+	for (var i of obj) {
+		console.log(i);
+	}
+
+	class RangeIterator {
+		constructor(start, stop) {
+			this.value = start;
+			this.stop = stop;
+		}
+
+		[Symbol.iterator]() { return this; }
+
+		next() {
+			var value = this.value;
+			if (value < this.stop) {
+				this.value++;
+				return { done: false, value: value };
+			}
+			return { done: true, value: undefined };
+		}
+	}
+
+	function range(start, stop) {
+		return new RangeIterator(start, stop);
+	}
+
+	for (var value of range(0, 3)) {
+		console.log(value); // 0, 1, 2
+	}
+
+	const str = "allen";
+	const strArry = [...str];
+	console.log(Array.prototype.slice.call(str));
+	console.log(strArry);
+
+	// 部署了Iterator 的数据结构包括 ,Array,Map,Set,String,TypedArray,函数的arguments对象，NodeList对象
+	// 只要某个数据结构部署了 Iterator 接口，就可以对它使用扩展运算符，将其转为数组。 let arr = [...iterable]
+
+
+	// iterator 最简单的实现
+
+	const iteratorObj = {
+		*[Symbol.iterator]() {
+			for (let i = 0; i < 10; i++) {
+				yield i;
+			}
+		}
+	}
+
+	for (let i of iteratorObj) {
+		console.log(i);
+	}
+
+	const weakMap = new WeakMap();
+
+
+	function fn() {
+		const mapKey = {};
+		weakMap.set(mapKey, { name: "allen" });
+		console.log(weakMap.get(mapKey));
+	}
+
+	fn()
+
+	
+
+	// const mapObj = new Map([["name", "allen"], [{ name: "allen" }, "20"]]);
+	// console.log(mapObj.get({ name: "allen" }));
+
+
+
+})();
+
+
+
 
 
 

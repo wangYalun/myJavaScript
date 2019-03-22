@@ -1,4 +1,4 @@
-var classnames = require('classnames');
+// var classnames = require('classnames');
 
 (function () {
 
@@ -86,7 +86,7 @@ var classnames = require('classnames');
         console.log('llll');
     }, 5000);
     clearTimeout(s);
-})();
+});
 
 /**
  * Array
@@ -141,7 +141,7 @@ var classnames = require('classnames');
     Date.UTC(2017, 3); //年月
     Date.now();//毫秒数
     +new Date();//毫秒数
-})();
+});
 /**
  * 私有变量
  */
@@ -189,6 +189,32 @@ var classnames = require('classnames');
     person2.setName("bob");
     console.log(person1.getName());
 
-})();
+});
 
+(function () {
+    const reg = /[\ |\~|\`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\+|\=|\||\\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?]/;
+    const queryText = "哈哈，呵呵"
+    console.log(queryText.split(reg));
+
+    function getMaxStr(str1, str2) {
+        var textArray = [];
+        var max = str1.length > str2.length ? str1 : str2;
+        var min = (max == str1 ? str2 : str1);
+        for (var i = 0; i < min.length; i++) {
+            for (var x = 0, y = min.length - i; y != min.length + 1; x++ , y++) {
+                //y表示所取字符串的长度
+                var newStr = min.substring(x, y);
+                //判断max中是否包含newStr
+                if (max.indexOf(newStr) != -1) {
+                    textArray.push(newStr);
+                }
+            }
+        }
+        return textArray;
+    }
+
+    var str1 = "维也纳国际酒店(坂田环城南路店)";
+    var str2 = "wei维也纳";
+    console.log(getMaxStr(str1, str2));
+})()
 console.log("fixed bug 101");
