@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>HTML5拖拽测试</title>
+    <style>
+        .block {
+            width: 40px;
+            height: 40px;
+            color: #fff;
+        }
+
+        .color-red {
+            background-color: red;
+        }
+
+        .color-black {
+            background-color: black;
+        }
+
+        .color-green {
+            background-color: green;
+        }
+
+        .color-yellow {
+            background-color: yellow;
+        }
+
+        .block-wrapper {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #aaa;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="block-wrapper" id="wrapper-1">
+        <div class="block color-green" draggable="true"></div>
+        <div class="block color-black" draggable="true"></div>
+        <div class="block color-red" draggable="true"></div>
+        <div class="block color-yellow" draggable="true"></div>
+    </div>
+    <div class="block-wrapper" id="wrapper-2"></div>
+    <script>
+        // document.querySelector('#wrapper-1').addEventListener("dragover", function (e) {
+        //     e.preventDefault();
+        // })
+        // document.querySelector('#wrapper-2').addEventListener("dragover", function (e) {
+        //     e.preventDefault();
+        // })
+        var dragingDom = null;
+        // 目的地对象
+        document.querySelectorAll(".block-wrapper").forEach(item => {
+            console.log(item);
+
+            item.addEventListener("dragenter", function (e) {
+                console.log("dragenter", e);
+            })
+
+            // 当被拖动元素在目的地元素内时触发
+            item.addEventListener("dragover", function (e) {
+                e.preventDefault();
+                console.log("dragover")
+            });
+
+            // 
+            item.addEventListener("dragleave", function (e) {
+                console.log("dragleave");
+            })
+            // 释放
+            item.addEventListener("drop", function (e) {
+                e.preventDefault();
+                console.log(e, "drop");
+                e.currentTarget.appendChild(dragingDom)
+            })
+        })
+        // 被拖动的元素
+        document.querySelectorAll(".block").forEach(item => {
+            // 在元素开始被拖动时触发
+            item.addEventListener("dragstart", function (e) {
+                dragingDom = e.currentTarget;
+                console.log("dragstart", e)
+            });
+            // 在元素被拖动时反复触发
+            item.addEventListener("drag", function (e) {
+                // console.log("drag", e);
+            })
+            // 拖动操作完成时触发
+            item.addEventListener("dragend", function (e) {
+                console.log("dragend", e)
+            })
+        })
+    </script>
+</body>
+
+</html>

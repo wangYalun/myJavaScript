@@ -1,8 +1,14 @@
 
 class Sort {
-    constructor(num, maxNum) {
+    constructor(num, maxNum, isOrder) {
         this.dataStore = new Array(num);
         //随机生成
+        if (isOrder) {
+            for (let i = 0; i < num; i++) {
+                this.dataStore[i] = i + maxNum;
+            }
+            return;
+        }
         for (let i = 0; i < num; i++) {
             this.dataStore[i] = Math.floor(Math.random() * maxNum + 1);
         }
@@ -122,10 +128,10 @@ class Sort {
     //归并排序
     mergeSort() {
 
-        var A=this.dataStore;
-        sort(0,A.length-1);
+        var A = this.dataStore;
+        sort(0, A.length - 1);
         //排序
-        function sort(p,r) {
+        function sort(p, r) {
             if (p < r) {
                 var q = Math.floor((p + r) / 2);
                 sort(p, q);
@@ -184,7 +190,7 @@ class Sort {
                             break;
                         };
                     }
-                    for ( ; nonius < j; nonius++) {
+                    for (; nonius < j; nonius++) {
                         if (array[nonius] > flag) {
                             array[j--] = array[nonius];
                             break;
@@ -213,6 +219,33 @@ class Sort {
         }
     }
 
+    unOrder2() {
+        var len = this.dataStore.length;
+        // 重复多少次
+        for (let i = 0; i < len; i++) {
+            // 随机取两个数字交换顺序
+            let first = Math.floor(Math.random() * (len));
+            let second = Math.floor(Math.random() * (len));
+            var temp = this.dataStore[first];
+            this.dataStore[first] = this.dataStore[second];
+            this.dataStore[second] = temp;
+        }
+    }
+
+    swap(i, j) {
+        var temp = this.dataStore[i];
+        this.dataStore[i] = this.dataStore[j];
+        this.dataStore[j] = temp;
+    }
+
+    // Knuth-Shuffle ，Knuth 洗牌算法
+    unOrderknuthShuffle() {
+        var len = this.dataStore.length;
+        for (var i = len - 1; i >= 0; i--) {
+            this.swap(i, Math.floor(Math.random() * (i + 1)));
+        }
+    }
+
     toString() {
         var restr = "";
         for (let i = 0; i < this.dataStore.length; ++i) {
@@ -226,33 +259,39 @@ class Sort {
 }
 
 //测试
-var s = new Sort(20, 100);
-// console.log(s.toString());
+var s = new Sort(20, 1, true);
+console.log(s.toString());
 // s.bubbleSort();
 // console.log(s.toString());
-// s.unOrder();
-// console.log(s.toString());
-// s.insertSort();
-// console.log(s.toString());
+s.unOrder2();
+console.log(s.toString());
+s.insertSort();
+console.log(s.toString());
 
-// s.unOrder();
-// console.log(s.toString());
+s.unOrderknuthShuffle();
+console.log(s.toString());
+
+s.insertSort();
+console.log(s.toString());
+
+s.unOrder();
+console.log(s.toString());
 // s.selectSort();
 // console.log(s.toString());
 // console.log("Shell Sort");
 // s.unOrder();
 // console.log(s.toString());
 // s.shellSort();
-console.log(s.toString());
-console.log('堆排序');
-s.heapSort();
-console.log(s.toString());
-s.unOrder();
-console.log('快速排序');
-s.quickSort();
-console.log(s.toString());
-console.log('归并排序');
-s.mergeSort();
-console.log(s.toString());
+// console.log(s.toString());
+// console.log('堆排序');
+// s.heapSort();
+// console.log(s.toString());
+// s.unOrder();
+// console.log('快速排序');
+// s.quickSort();
+// console.log(s.toString());
+// console.log('归并排序');
+// s.mergeSort();
+// console.log(s.toString());
 
 

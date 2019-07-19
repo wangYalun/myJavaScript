@@ -256,7 +256,7 @@ var Event = (function () {
 
 	return Event;
 
-})();
+});
 
 
 (function () {
@@ -302,11 +302,106 @@ var Event = (function () {
 		console.log(res);
 	});
 
+});
 
+(function () {
 
+	function getByteLen(val) {
+		var len = 0;
+		for (var i = 0; i < val.length; i++) {
+			var a = val.charAt(i);
+			if (a.match(/[^\x00-\xff]/ig) != null) {
+				len += 2;
+			} else {
+				len += 1;
+			}
+		}
+		return len;
+	}
+	function formatLabelContent(txt) {
+		var len = getByteLen(txt);
+		if (len > 20) {
+			len = 20;
+			for (var i = 0; i < txt.length; i++) {
+				var a = txt.charAt(i);
+				var after = txt.charAt(i + 1);
+				if (a.match(/[^\x00-\xff]/ig) != null) {
+					len -= 2;
+				} else {
+					len -= 1;
+				}
+				console.log(a, i, len);
+				if (len <= 0) {
+					//console.log(txt.substring())
+					let sliceIndex = i + 1;
+					if (/\(/i.test(a)) {
+						sliceIndex = sliceIndex - 1;
+					}
+					if (/\)/i.test(after)) {
+						sliceIndex = sliceIndex + 1;
+					}
+					let firstTxt = txt.slice(0, sliceIndex);
+					// console.log(firstTxt, i)
+					let lastTxt = txt.slice(sliceIndex);
+					txt = firstTxt + "\n" + lastTxt;
+					break;
+				}
+			}
+		}
+		return txt;
+	}
 
+	console.log(formatLabelContent("你好哈哈哈哈哈a(haha)哈哈哈哈啊哈哈"));
+});
 
-})();
+function unOrder(dataStore) {
+	var temp = dataStore.slice(0), len = dataStore.length;
+	for (let i = 0; i < len; i++) {
+		let index = Math.floor(Math.random() * (len - i));
+		dataStore[i] = temp[index];
+		//删除已经获取的值
+		temp.splice(index, 1);
+	}
+	return dataStore;
+}
+
+(function () {
+	// const boyStr = "王雅伦 杨兴 邱一鸣 杨颖 李明 邱剑波 张汉江 段德辉 朱永扬  郑望安 李想 梁琨琳 "
+	// 	+ "刘国权 李岳光 康骄 肖俊 詹宸 陈奕宇 周勇曙 杨安武 刘威明 黄鹏 高俊业 周垠驰 贺兵兵 陈恒 常涛 涂毅";
+	const boyStr = "王雅伦 邱一鸣 杨颖 李明 邱剑波 张汉江 段德辉 郑望安 李想 梁琨琳 "
+		+ "刘国权 李岳光 肖俊 詹宸 杨安武 黄鹏 高俊业 周垠驰 常涛";
+	const girlStr = "钟高丽 张小雨 贺红";
+	const GROUP = "ABCDEFGHIJKLMNOPQRSTUVWSYZ";
+	// const GroupList = GROUP.split("");
+	let boyList = boyStr.split(/\s+/);
+	let girlList = girlStr.split(/\s+/);
+
+	// 随机排序
+	boyList = unOrder(boyList);
+	girlList = unOrder(girlList);
+
+	const GroupList = GROUP.split("").map((item, index) => {
+		if (girlList.length) {
+			return [item, girlList.pop(), boyList.pop()]
+		} else {
+			return [item, boyList.pop(), boyList.pop()]
+		}
+	})
+	console.log(GroupList);
+});
+
+(() => {
+	// 利用字符串模板
+	const round = (n, decimals = 0) => Number(`${Math.round(`${n}e${decimals}`)}e-${decimals}`);
+	// 利用数学方法
+	const round2 = (num, decimals) => {
+		let _num = num * Math.pow(10, decimals);
+		_num = Math.round(_num);
+		return _num / Math.pow(10, decimals);
+	}
+	console.log(round(1.3466, 3));
+	console.log(round2(1.3466, 3));
+})()
 
 
 
