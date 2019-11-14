@@ -890,14 +890,40 @@
 
 	fn()
 
-	
+
 
 	// const mapObj = new Map([["name", "allen"], [{ name: "allen" }, "20"]]);
 	// console.log(mapObj.get({ name: "allen" }));
 
 
 
-})();
+});
+
+(function () {
+	class Marker {
+		constructor(point, markerType, payload) {
+			console.log(point, markerType, payload);
+		}
+	}
+
+	const marker = new Marker(1, 2, 3);
+
+	class UdianbusMarker extends Marker {
+		constructor(point, markerType, payload) {
+			super(point, markerType, payload);
+		}
+	}
+	const udianbusMarker = new UdianbusMarker(1, 2, 3);
+
+	const obj = { name: "allen", age: 20, sex: "man" };
+	// const name = obj.name;
+	const { name, age, sex } = obj;
+	console.log(name);
+});
+
+(function(){
+	
+})()
 
 
 
