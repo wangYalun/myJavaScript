@@ -917,3 +917,127 @@
   (new Foo()).method();
 //   Foo.prototype.method();
 })();
+	const obj = {
+		[Symbol.iterator]() {
+			return {
+				next() {
+					return {
+						value: 1,
+						done: true
+					}
+				}
+			}
+		}
+	}
+
+
+	for (var i of obj) {
+		console.log(i);
+	}
+
+	class RangeIterator {
+		constructor(start, stop) {
+			this.value = start;
+			this.stop = stop;
+		}
+
+		[Symbol.iterator]() { return this; }
+
+		next() {
+			var value = this.value;
+			if (value < this.stop) {
+				this.value++;
+				return { done: false, value: value };
+			}
+			return { done: true, value: undefined };
+		}
+	}
+
+	function range(start, stop) {
+		return new RangeIterator(start, stop);
+	}
+
+	for (var value of range(0, 3)) {
+		console.log(value); // 0, 1, 2
+	}
+
+	const str = "allen";
+	const strArry = [...str];
+	console.log(Array.prototype.slice.call(str));
+	console.log(strArry);
+
+	// 部署了Iterator 的数据结构包括 ,Array,Map,Set,String,TypedArray,函数的arguments对象，NodeList对象
+	// 只要某个数据结构部署了 Iterator 接口，就可以对它使用扩展运算符，将其转为数组。 let arr = [...iterable]
+
+
+	// iterator 最简单的实现
+
+	const iteratorObj = {
+		*[Symbol.iterator]() {
+			for (let i = 0; i < 10; i++) {
+				yield i;
+			}
+		}
+	}
+
+	for (let i of iteratorObj) {
+		console.log(i);
+	}
+
+	const weakMap = new WeakMap();
+
+
+	function fn() {
+		const mapKey = {};
+		weakMap.set(mapKey, { name: "allen" });
+		console.log(weakMap.get(mapKey));
+	}
+
+	fn()
+
+
+
+	// const mapObj = new Map([["name", "allen"], [{ name: "allen" }, "20"]]);
+	// console.log(mapObj.get({ name: "allen" }));
+
+
+
+});
+
+(function () {
+	class Marker {
+		constructor(point, markerType, payload) {
+			console.log(point, markerType, payload);
+		}
+	}
+
+	const marker = new Marker(1, 2, 3);
+
+	class UdianbusMarker extends Marker {
+		constructor(point, markerType, payload) {
+			super(point, markerType, payload);
+		}
+	}
+	const udianbusMarker = new UdianbusMarker(1, 2, 3);
+
+	const obj = { name: "allen", age: 20, sex: "man" };
+	// const name = obj.name;
+	const { name, age, sex } = obj;
+	console.log(name);
+});
+
+(function(){
+	
+})()
+
+
+
+
+
+
+
+
+
+
+
+

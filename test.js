@@ -216,5 +216,5 @@
     var str1 = "维也纳国际酒店(坂田环城南路店)";
     var str2 = "wei维也纳";
     console.log(getMaxStr(str1, str2));
-})()
-console.log("fixed bug 101");
+})
+
